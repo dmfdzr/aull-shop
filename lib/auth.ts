@@ -1,11 +1,9 @@
 import { redirect } from "next/navigation"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
+import { getSupabasePublishableKey, getSupabaseUrl } from "@/lib/supabase/env"
 
 export async function getAdminUser() {
-  if (
-    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
-    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  ) {
+  if (!getSupabaseUrl() || !getSupabasePublishableKey()) {
     return null
   }
 
