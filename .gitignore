@@ -35,6 +35,10 @@ pnpm-debug.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# ai skills
+.agents/
+skills-lock.json
+
 # generated
 /lib/generated/prisma/
 
