@@ -34,3 +34,11 @@ pnpm-debug.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated
+/lib/generated/prisma/
+
+# env files
+.env
+.env.*
+!.env.example
