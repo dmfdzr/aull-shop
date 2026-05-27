@@ -1,7 +1,7 @@
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import { AdminShell } from "@/components/admin-shell"
 import { AppAlert } from "@/components/app-alert"
+import { BackLinkButton, SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { requireAdminUser } from "@/lib/auth"
@@ -71,9 +71,9 @@ export default async function AdminOrderDetailPage({
     >
       <AppAlert status={flash.status} message={flash.message} />
       <div className="mb-4">
-        <Button asChild variant="outline">
-          <Link href="/admin/orders">Kembali ke masterlist order</Link>
-        </Button>
+        <BackLinkButton href="/admin/orders">
+          Kembali ke masterlist order
+        </BackLinkButton>
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
@@ -110,7 +110,10 @@ export default async function AdminOrderDetailPage({
           </div>
 
           <div className="app-surface p-5">
-            <h2 className="mb-4 font-semibold">Item</h2>
+            <SectionHeader
+              title="Item order"
+              description="Snapshot item saat customer membuat order."
+            />
             <div className="space-y-3">
               {order.items.map((item) => (
                 <div
@@ -132,7 +135,10 @@ export default async function AdminOrderDetailPage({
           </div>
 
           <div className="app-surface p-5">
-            <h2 className="mb-4 font-semibold">Timeline shipment</h2>
+            <SectionHeader
+              title="Timeline shipment"
+              description="Riwayat pergerakan barang untuk order ini."
+            />
             {order.shipmentEvents.length === 0 ? (
               <p className="text-sm text-muted-foreground">
                 Belum ada shipment event.
@@ -165,7 +171,10 @@ export default async function AdminOrderDetailPage({
 
         <aside className="space-y-5">
           <div className="app-surface p-5">
-            <h2 className="mb-4 font-semibold">Pembayaran</h2>
+            <SectionHeader
+              title="Verifikasi pembayaran"
+              description="Cek bukti DP atau pelunasan sebelum mengubah status."
+            />
             <div className="space-y-3">
               {order.payments.map((payment) => (
                 <div
@@ -228,7 +237,11 @@ export default async function AdminOrderDetailPage({
             action={addShipmentEventAction}
             className="app-surface grid gap-3 p-5"
           >
-            <h2 className="font-semibold">Tambah shipment event</h2>
+            <SectionHeader
+              title="Tambah update shipment"
+              description="Pilih stage terbaru agar customer bisa memantau progress."
+              className="mb-1"
+            />
             <input type="hidden" name="orderId" value={order.id} />
             <label className="grid gap-2 text-sm font-medium">
               Stage
@@ -278,7 +291,10 @@ export default async function AdminOrderDetailPage({
           </form>
 
           <div className="app-surface p-5">
-            <h2 className="mb-3 font-semibold">Shopee checkout</h2>
+            <SectionHeader
+              title="Status checkout Shopee"
+              description="Informasi checkout yang terlihat dari sisi customer."
+            />
             {order.shopeeCheckout ? (
               <div className="space-y-3 text-sm">
                 <StatusBadge
@@ -308,7 +324,11 @@ export default async function AdminOrderDetailPage({
             action={upsertShopeeInstructionAction}
             className="app-surface grid gap-3 p-5"
           >
-            <h2 className="font-semibold">Instruksi Shopee</h2>
+            <SectionHeader
+              title="Instruksi Shopee"
+              description="Isi instruksi dan link yang harus diikuti customer."
+              className="mb-1"
+            />
             <input type="hidden" name="orderId" value={order.id} />
             <textarea
               required

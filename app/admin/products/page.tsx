@@ -1,5 +1,6 @@
 import { AdminShell } from "@/components/admin-shell"
 import { AppAlert } from "@/components/app-alert"
+import { SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { getBatches, getProducts } from "@/lib/admin-data"
@@ -30,13 +31,11 @@ export default async function AdminProductsPage({
     >
       <AppAlert status={flash.status} message={flash.message} />
       <section className="app-surface mb-6 p-5">
-        <div className="mb-4">
-          <h2 className="font-semibold">Tambah produk</h2>
-          <p className="text-sm text-muted-foreground">
-            Varian ditulis satu per baris. Format opsional:{" "}
-            <span className="font-mono">Nama varian | SKU | Kuota</span>.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Katalog PO"
+          title="Tambah produk"
+          description="Varian ditulis satu per baris. Format opsional: Nama varian | SKU | Kuota."
+        />
         <form action={createProductAction} className="grid gap-4 lg:grid-cols-6">
           <label className="grid gap-2 text-sm font-medium lg:col-span-2">
             Batch

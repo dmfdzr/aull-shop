@@ -1,6 +1,6 @@
-import Link from "next/link"
 import { createOrderAction } from "@/app/actions/orders"
 import { AppAlert } from "@/components/app-alert"
+import { BackLinkButton, SectionHeader } from "@/components/page-chrome"
 import { Button } from "@/components/ui/button"
 import { getCheckoutOptions } from "@/lib/catalog"
 import { formatCurrency } from "@/lib/format"
@@ -22,9 +22,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
     <main className="min-h-svh">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-12">
         <aside className="space-y-4">
-          <Button asChild variant="ghost" className="px-0">
-            <Link href="/">Lihat katalog dulu</Link>
-          </Button>
+          <BackLinkButton href="/">Kembali ke katalog</BackLinkButton>
           <div className="space-y-3">
             <p className="text-sm font-medium text-primary">Form pemesanan PO</p>
             <h1 className="text-3xl font-semibold md:text-5xl">
@@ -48,6 +46,12 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
           <AppAlert
             status={flash.status}
             message={flash.message}
+            className="mb-0"
+          />
+          <SectionHeader
+            eyebrow="Customer order"
+            title="Data pemesanan"
+            description="Pastikan varian, jumlah, dan bukti DP sudah benar sebelum mengirim order."
             className="mb-0"
           />
           <div className="grid gap-2">

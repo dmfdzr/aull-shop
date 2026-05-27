@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { AppAlert } from "@/components/app-alert"
+import { BackLinkButton, SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
@@ -62,9 +63,7 @@ export default async function OrderStatusPage({
   return (
     <main className="min-h-svh">
       <div className="mx-auto w-full max-w-4xl space-y-6 px-5 py-8 md:px-8 md:py-12">
-        <Button asChild variant="ghost" className="px-0">
-          <Link href="/">Lihat katalog</Link>
-        </Button>
+        <BackLinkButton href="/">Kembali ke katalog</BackLinkButton>
         <AppAlert status={flash.status} message={flash.message} />
 
         <section className="app-surface p-5">
@@ -89,7 +88,10 @@ export default async function OrderStatusPage({
 
         <section className="grid gap-4 md:grid-cols-2">
           <div className="app-surface p-5">
-            <h2 className="mb-3 font-semibold">Item order</h2>
+            <SectionHeader
+              title="Item order"
+              description="Ringkasan item dan varian yang kamu pesan."
+            />
             <div className="space-y-3">
               {order.items.map((item) => (
                 <div
@@ -111,7 +113,10 @@ export default async function OrderStatusPage({
           </div>
 
           <div className="app-surface p-5">
-            <h2 className="mb-3 font-semibold">Pembayaran</h2>
+            <SectionHeader
+              title="Pembayaran"
+              description="Status DP dan pelunasan yang sudah tercatat."
+            />
             <div className="space-y-3">
               <div className="flex justify-between gap-4 text-sm">
                 <span className="text-muted-foreground">Estimasi total</span>
@@ -152,7 +157,10 @@ export default async function OrderStatusPage({
         </section>
 
         <section className="app-surface p-5">
-          <h2 className="mb-4 font-semibold">Timeline pengiriman</h2>
+          <SectionHeader
+            title="Timeline pengiriman"
+            description="Update posisi barang dari admin akan muncul di sini."
+          />
           {order.shipmentEvents.length === 0 ? (
             <p className="text-sm text-muted-foreground">
               Shipment belum dimulai. Status akan muncul setelah admin update.
@@ -181,7 +189,10 @@ export default async function OrderStatusPage({
 
         {order.shopeeCheckout ? (
           <section className="app-surface p-5">
-            <h2 className="mb-2 font-semibold">Checkout Shopee</h2>
+            <SectionHeader
+              title="Checkout Shopee"
+              description="Kirim link invoice atau bukti checkout setelah mengikuti instruksi admin."
+            />
             <p className="text-sm text-muted-foreground">
               {order.shopeeCheckout.instructionText ??
                 "Instruksi checkout Shopee sudah tersedia dari admin."}
@@ -222,10 +233,10 @@ export default async function OrderStatusPage({
         ) : null}
 
         <section className="app-surface p-5">
-          <h2 className="mb-2 font-semibold">Upload pelunasan</h2>
-          <p className="mb-4 text-sm text-muted-foreground">
-            Gunakan form ini setelah admin menginfokan nominal final.
-          </p>
+          <SectionHeader
+            title="Upload pelunasan"
+            description="Gunakan form ini setelah admin menginfokan nominal final."
+          />
           <form action={submitFinalPaymentAction} className="grid gap-3">
             <input type="hidden" name="orderCode" value={order.orderCode} />
             <label className="grid gap-2 text-sm font-medium">

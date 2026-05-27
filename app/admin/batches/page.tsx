@@ -1,5 +1,6 @@
 import { AdminShell } from "@/components/admin-shell"
 import { AppAlert } from "@/components/app-alert"
+import { SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { getBatches } from "@/lib/admin-data"
@@ -29,12 +30,11 @@ export default async function AdminBatchesPage({
     >
       <AppAlert status={flash.status} message={flash.message} />
       <section className="app-surface mb-6 p-5">
-        <div className="mb-4">
-          <h2 className="font-semibold">Tambah PO batch</h2>
-          <p className="text-sm text-muted-foreground">
-            Batch berstatus OPEN akan langsung tampil di katalog customer.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Setup PO"
+          title="Tambah PO batch"
+          description="Batch berstatus OPEN akan langsung tampil di katalog customer."
+        />
         <form action={createBatchAction} className="grid gap-4 lg:grid-cols-6">
           <label className="grid gap-2 text-sm font-medium lg:col-span-2">
             Nama batch
@@ -99,7 +99,11 @@ export default async function AdminBatchesPage({
 
       <section className="app-table">
         <div className="border-b p-4">
-          <h2 className="font-semibold">Daftar batch</h2>
+          <SectionHeader
+            title="Daftar batch"
+            description="Ubah status batch sesuai progress PO. Status OPEN menerima order baru."
+            className="mb-0"
+          />
         </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[720px] text-left text-sm">

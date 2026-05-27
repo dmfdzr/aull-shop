@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { AdminShell } from "@/components/admin-shell"
 import { AppAlert } from "@/components/app-alert"
+import { ActionToolbar, SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { getRecentOrders } from "@/lib/admin-data"
@@ -29,16 +30,26 @@ export default async function AdminOrdersPage({
       description="Daftar order PO dengan status pembayaran dan shipment terpisah."
     >
       <AppAlert status={flash.status} message={flash.message} />
-      <section className="mb-4 flex flex-wrap gap-2">
+      <ActionToolbar
+        title="Export laporan"
+        description="Download masterlist untuk rekap owner atau pengecekan operasional."
+      >
         <Button asChild variant="outline">
-          <Link href="/api/admin/orders/export?format=csv">Export CSV</Link>
+          <Link href="/api/admin/orders/export?format=csv">Download CSV</Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href="/api/admin/orders/export?format=xlsx">Export XLSX</Link>
+          <Link href="/api/admin/orders/export?format=xlsx">Download XLSX</Link>
         </Button>
-      </section>
+      </ActionToolbar>
 
       <section className="app-table">
+        <div className="border-b p-4">
+          <SectionHeader
+            title="Order masuk"
+            description="Pantau customer, batch, nilai order, pembayaran, dan posisi shipment."
+            className="mb-0"
+          />
+        </div>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[920px] text-left text-sm">
             <thead className="border-b bg-muted/50 text-muted-foreground">
