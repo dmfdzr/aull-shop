@@ -1,7 +1,9 @@
 import { AdminShell } from "@/components/admin-shell"
 import { StatusBadge } from "@/components/status-badge"
+import { Button } from "@/components/ui/button"
 import { getBatches } from "@/lib/admin-data"
 import { requireAdminUser } from "@/lib/auth"
+import { createBatchAction, updateBatchStatusAction } from "./actions"
 
 export const dynamic = "force-dynamic"
 
@@ -12,8 +14,77 @@ export default async function AdminBatchesPage() {
   return (
     <AdminShell
       title="PO Batch"
-      description="Kelola periode PO. CRUD action akan memakai schema yang sudah disiapkan."
+      description="Kelola periode PO, buka/tutup batch, dan siapkan katalog merch."
     >
+      <section className="mb-6 rounded-lg border bg-card p-5">
+        <div className="mb-4">
+          <h2 className="font-semibold">Tambah PO batch</h2>
+          <p className="text-sm text-muted-foreground">
+            Batch berstatus OPEN akan langsung tampil di katalog customer.
+          </p>
+        </div>
+        <form action={createBatchAction} className="grid gap-4 lg:grid-cols-6">
+          <label className="grid gap-2 text-sm font-medium lg:col-span-2">
+            Nama batch
+            <input
+              required
+              name="name"
+              className="h-10 rounded-md border bg-background px-3 text-sm"
+              placeholder="PO Album Comeback Juni"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-medium">
+            Negara
+            <input
+              name="sourceCountry"
+              className="h-10 rounded-md border bg-background px-3 text-sm"
+              placeholder="Korea"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-medium">
+            Buka PO
+            <input
+              name="openAt"
+              type="datetime-local"
+              className="h-10 rounded-md border bg-background px-3 text-sm"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-medium">
+            Tutup PO
+            <input
+              name="closeAt"
+              type="datetime-local"
+              className="h-10 rounded-md border bg-background px-3 text-sm"
+            />
+          </label>
+          <label className="grid gap-2 text-sm font-medium">
+            Status
+            <select
+              name="status"
+              defaultValue="OPEN"
+              className="h-10 rounded-md border bg-background px-3 text-sm"
+            >
+              <option value="DRAFT">Draft</option>
+              <option value="OPEN">Open</option>
+              <option value="CLOSED">Closed</option>
+            </select>
+          </label>
+          <label className="grid gap-2 text-sm font-medium lg:col-span-5">
+            Deskripsi
+            <input
+              name="description"
+              className="h-10 rounded-md border bg-background px-3 text-sm"
+              placeholder="Catatan internal atau info PO"
+            />
+          </label>
+          <div className="flex items-end">
+            <Button type="submit" className="w-full">
+              Simpan batch
+            </Button>
+          </div>
+        </form>
+      </section>
+
       <section className="rounded-lg border bg-card">
         <div className="border-b p-4">
           <h2 className="font-semibold">Daftar batch</h2>
@@ -27,12 +98,13 @@ export default async function AdminBatchesPage() {
                 <th className="px-4 py-3 font-medium">Tutup PO</th>
                 <th className="px-4 py-3 font-medium">Produk</th>
                 <th className="px-4 py-3 font-medium">Order</th>
+                <th className="px-4 py-3 font-medium">Action</th>
               </tr>
             </thead>
             <tbody>
               {batches.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-muted-foreground">
+                  <td colSpan={6} className="px-4 py-8 text-muted-foreground">
                     Belum ada PO batch.
                   </td>
                 </tr>
@@ -56,6 +128,28 @@ export default async function AdminBatchesPage() {
                     </td>
                     <td className="px-4 py-3">{batch._count.products}</td>
                     <td className="px-4 py-3">{batch._count.orders}</td>
+                    <td className="px-4 py-3">
+                      <form
+                        action={updateBatchStatusAction}
+                        className="flex min-w-40 gap-2"
+                      >
+                        <input type="hidden" name="id" value={batch.id} />
+                        <select
+                          name="status"
+                          defaultValue={batch.status}
+                          className="h-9 rounded-md border bg-background px-2 text-xs"
+                        >
+                          <option value="DRAFT">Draft</option>
+                          <option value="OPEN">Open</option>
+                          <option value="CLOSED">Closed</option>
+                          <option value="ORDERED">Ordered</option>
+                          <option value="COMPLETED">Completed</option>
+                        </select>
+                        <Button type="submit" variant="outline" size="sm">
+                          Update
+                        </Button>
+                      </form>
+                    </td>
                   </tr>
                 ))
               )}

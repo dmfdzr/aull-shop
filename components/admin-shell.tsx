@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { signOutAdminAction } from "@/app/admin/actions"
 
 const navItems = [
   { href: "/admin", label: "Dashboard" },
@@ -34,6 +35,11 @@ export function AdminShell({ children, title, description }: AdminShellProps) {
                 <Link href={item.href}>{item.label}</Link>
               </Button>
             ))}
+            <form action={signOutAdminAction}>
+              <Button type="submit" variant="ghost" size="sm">
+                Logout
+              </Button>
+            </form>
           </nav>
         </div>
       </header>
