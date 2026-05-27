@@ -1,6 +1,11 @@
 import { prisma } from "@/lib/prisma"
+import { isDatabaseConfigured } from "@/lib/env"
 
 export async function getActiveCatalog() {
+  if (!isDatabaseConfigured()) {
+    return []
+  }
+
   try {
     return await prisma.poBatch.findMany({
       where: {

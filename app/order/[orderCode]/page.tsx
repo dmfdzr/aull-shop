@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
+import { isDatabaseConfigured } from "@/lib/env"
 import { prisma } from "@/lib/prisma"
 import {
   submitFinalPaymentAction,
@@ -21,6 +22,11 @@ export default async function OrderStatusPage({
   params,
 }: OrderStatusPageProps) {
   const { orderCode } = await params
+
+  if (!isDatabaseConfigured()) {
+    notFound()
+  }
+
   const order = await prisma.order.findUnique({
     where: {
       orderCode,

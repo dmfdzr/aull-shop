@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { requireAdminUser } from "@/lib/auth"
+import { assertDatabaseConfigured } from "@/lib/env"
 import { prisma } from "@/lib/prisma"
 
 const verifyPaymentSchema = z.object({
@@ -14,6 +15,7 @@ const verifyPaymentSchema = z.object({
 
 export async function verifyPaymentAction(formData: FormData) {
   await requireAdminUser()
+  assertDatabaseConfigured()
   const parsed = verifyPaymentSchema.safeParse({
     orderId: formData.get("orderId"),
     paymentId: formData.get("paymentId"),
@@ -82,6 +84,7 @@ const shipmentEventSchema = z.object({
 
 export async function addShipmentEventAction(formData: FormData) {
   await requireAdminUser()
+  assertDatabaseConfigured()
   const parsed = shipmentEventSchema.safeParse({
     orderId: formData.get("orderId"),
     stage: formData.get("stage"),
@@ -136,6 +139,7 @@ const shopeeInstructionSchema = z.object({
 
 export async function upsertShopeeInstructionAction(formData: FormData) {
   await requireAdminUser()
+  assertDatabaseConfigured()
   const parsed = shopeeInstructionSchema.safeParse({
     orderId: formData.get("orderId"),
     instructionText: formData.get("instructionText"),

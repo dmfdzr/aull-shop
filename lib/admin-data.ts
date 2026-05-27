@@ -1,6 +1,17 @@
 import { prisma } from "@/lib/prisma"
+import { isDatabaseConfigured } from "@/lib/env"
 
 export async function getAdminDashboardStats() {
+  if (!isDatabaseConfigured()) {
+    return {
+      activeBatches: 0,
+      pendingDpVerification: 0,
+      waitingFinalPayment: 0,
+      shipmentsInProgress: 0,
+      shopeePending: 0,
+    }
+  }
+
   try {
     const [
       activeBatches,
@@ -45,6 +56,10 @@ export async function getAdminDashboardStats() {
 }
 
 export async function getRecentOrders() {
+  if (!isDatabaseConfigured()) {
+    return []
+  }
+
   try {
     return await prisma.order.findMany({
       include: {
@@ -63,6 +78,10 @@ export async function getRecentOrders() {
 }
 
 export async function getBatches() {
+  if (!isDatabaseConfigured()) {
+    return []
+  }
+
   try {
     return await prisma.poBatch.findMany({
       include: {
@@ -83,6 +102,10 @@ export async function getBatches() {
 }
 
 export async function getProducts() {
+  if (!isDatabaseConfigured()) {
+    return []
+  }
+
   try {
     return await prisma.product.findMany({
       include: {

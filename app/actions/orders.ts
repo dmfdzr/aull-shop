@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation"
 import { z } from "zod"
 import { prisma } from "@/lib/prisma"
+import { assertDatabaseConfigured } from "@/lib/env"
 import { createOrderCode } from "@/lib/order-code"
 import { buildProofPath, PROOF_BUCKET, validateProofFile } from "@/lib/storage"
 import { createSupabaseAdminClient } from "@/lib/supabase/admin"
@@ -19,6 +20,8 @@ const createOrderSchema = z.object({
 })
 
 export async function createOrderAction(formData: FormData) {
+  assertDatabaseConfigured()
+
   const proofFile = formData.get("proofFile")
   const parsed = createOrderSchema.safeParse({
     customerName: formData.get("customerName"),

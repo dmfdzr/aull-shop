@@ -1,12 +1,15 @@
 import { NextRequest } from "next/server"
 import * as XLSX from "xlsx"
 import { requireAdminUser } from "@/lib/auth"
+import { assertDatabaseConfigured } from "@/lib/env"
 import { prisma } from "@/lib/prisma"
 
 export const dynamic = "force-dynamic"
 
 export async function GET(request: NextRequest) {
   await requireAdminUser()
+  assertDatabaseConfigured()
+
   const format = request.nextUrl.searchParams.get("format") ?? "csv"
   const orders = await prisma.order.findMany({
     include: {

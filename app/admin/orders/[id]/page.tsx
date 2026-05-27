@@ -4,6 +4,7 @@ import { AdminShell } from "@/components/admin-shell"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { requireAdminUser } from "@/lib/auth"
+import { isDatabaseConfigured } from "@/lib/env"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
 import { prisma } from "@/lib/prisma"
 import {
@@ -25,6 +26,11 @@ export default async function AdminOrderDetailPage({
 }: AdminOrderDetailPageProps) {
   await requireAdminUser()
   const { id } = await params
+
+  if (!isDatabaseConfigured()) {
+    notFound()
+  }
+
   const order = await prisma.order.findUnique({
     where: {
       id,

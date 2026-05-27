@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { prisma } from "@/lib/prisma"
+import { assertDatabaseConfigured } from "@/lib/env"
 import { buildProofPath, PROOF_BUCKET, validateProofFile } from "@/lib/storage"
 import { createSupabaseAdminClient } from "@/lib/supabase/admin"
 
@@ -12,6 +13,8 @@ const finalPaymentSchema = z.object({
 })
 
 export async function submitFinalPaymentAction(formData: FormData) {
+  assertDatabaseConfigured()
+
   const proofFile = formData.get("proofFile")
   const parsed = finalPaymentSchema.safeParse({
     orderCode: formData.get("orderCode"),
@@ -88,6 +91,8 @@ const shopeeProofSchema = z.object({
 })
 
 export async function submitShopeeCheckoutProofAction(formData: FormData) {
+  assertDatabaseConfigured()
+
   const proofFile = formData.get("proofFile")
   const parsed = shopeeProofSchema.safeParse({
     orderCode: formData.get("orderCode"),
