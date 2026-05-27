@@ -78,7 +78,7 @@ export default async function AdminOrderDetailPage({
 
       <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
         <section className="space-y-5">
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <div className="mb-4 flex flex-wrap gap-2">
               <StatusBadge tone="amber">
                 {paymentStatusLabel[order.paymentStatus]}
@@ -109,7 +109,7 @@ export default async function AdminOrderDetailPage({
             </dl>
           </div>
 
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <h2 className="mb-4 font-semibold">Item</h2>
             <div className="space-y-3">
               {order.items.map((item) => (
@@ -131,7 +131,7 @@ export default async function AdminOrderDetailPage({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <h2 className="mb-4 font-semibold">Timeline shipment</h2>
             {order.shipmentEvents.length === 0 ? (
               <p className="text-sm text-muted-foreground">
@@ -164,7 +164,7 @@ export default async function AdminOrderDetailPage({
         </section>
 
         <aside className="space-y-5">
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <h2 className="mb-4 font-semibold">Pembayaran</h2>
             <div className="space-y-3">
               {order.payments.map((payment) => (
@@ -226,7 +226,7 @@ export default async function AdminOrderDetailPage({
 
           <form
             action={addShipmentEventAction}
-            className="grid gap-3 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm"
+            className="app-surface grid gap-3 p-5"
           >
             <h2 className="font-semibold">Tambah shipment event</h2>
             <input type="hidden" name="orderId" value={order.id} />
@@ -277,7 +277,7 @@ export default async function AdminOrderDetailPage({
             <Button type="submit">Tambah event</Button>
           </form>
 
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <h2 className="mb-3 font-semibold">Shopee checkout</h2>
             {order.shopeeCheckout ? (
               <div className="space-y-3 text-sm">
@@ -306,7 +306,7 @@ export default async function AdminOrderDetailPage({
 
           <form
             action={upsertShopeeInstructionAction}
-            className="grid gap-3 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm"
+            className="app-surface grid gap-3 p-5"
           >
             <h2 className="font-semibold">Instruksi Shopee</h2>
             <input type="hidden" name="orderId" value={order.id} />

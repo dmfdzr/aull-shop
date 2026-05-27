@@ -42,7 +42,7 @@ export default async function AdminDashboardPage({
         {statCards.map((card) => (
           <div
             key={card.label}
-            className="rounded-2xl border border-cyan-100 bg-white/90 p-4 shadow-sm"
+            className="app-surface p-4"
           >
             <p className="text-sm text-muted-foreground">{card.label}</p>
             <p className="mt-2 text-3xl font-semibold">{card.value}</p>
@@ -50,7 +50,7 @@ export default async function AdminDashboardPage({
         ))}
       </section>
 
-      <section className="mt-6 overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 shadow-sm">
+      <section className="app-table mt-6">
         <div className="border-b p-4">
           <h2 className="font-semibold">Order terbaru</h2>
           <p className="text-sm text-muted-foreground">

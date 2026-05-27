@@ -86,37 +86,37 @@
 }
 
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.45 0.085 224.283);
-    --primary-foreground: oklch(0.984 0.019 200.873);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.865 0.127 207.078);
-    --chart-2: oklch(0.715 0.143 215.221);
-    --chart-3: oklch(0.609 0.126 221.723);
-    --chart-4: oklch(0.52 0.105 223.128);
-    --chart-5: oklch(0.45 0.085 224.283);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.715 0.143 215.221);
-    --sidebar-primary-foreground: oklch(0.302 0.056 229.695);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+    --background: oklch(0.18 0.052 234);
+    --foreground: oklch(0.94 0.028 216);
+    --card: oklch(0.235 0.054 232);
+    --card-foreground: oklch(0.94 0.028 216);
+    --popover: oklch(0.235 0.054 232);
+    --popover-foreground: oklch(0.94 0.028 216);
+    --primary: oklch(0.76 0.125 209);
+    --primary-foreground: oklch(0.18 0.052 234);
+    --secondary: oklch(0.3 0.058 229);
+    --secondary-foreground: oklch(0.91 0.043 211);
+    --muted: oklch(0.275 0.047 231);
+    --muted-foreground: oklch(0.75 0.05 218);
+    --accent: oklch(0.34 0.078 194);
+    --accent-foreground: oklch(0.94 0.04 195);
+    --destructive: oklch(0.72 0.18 24);
+    --border: oklch(0.37 0.06 225);
+    --input: oklch(0.32 0.052 229);
+    --ring: oklch(0.72 0.11 205);
+    --chart-1: oklch(0.74 0.12 207);
+    --chart-2: oklch(0.74 0.13 188);
+    --chart-3: oklch(0.78 0.12 155);
+    --chart-4: oklch(0.82 0.12 86);
+    --chart-5: oklch(0.73 0.13 322);
+    --sidebar: oklch(0.22 0.052 232);
+    --sidebar-foreground: oklch(0.94 0.028 216);
+    --sidebar-primary: oklch(0.76 0.125 209);
+    --sidebar-primary-foreground: oklch(0.18 0.052 234);
+    --sidebar-accent: oklch(0.3 0.058 229);
+    --sidebar-accent-foreground: oklch(0.91 0.043 211);
+    --sidebar-border: oklch(0.37 0.06 225);
+    --sidebar-ring: oklch(0.72 0.11 205);
 }
 
 @layer base {
@@ -126,11 +126,38 @@
   body {
     @apply bg-background text-foreground;
     background-image:
-      radial-gradient(circle at top left, color-mix(in oklch, var(--primary), transparent 74%), transparent 34rem),
-      linear-gradient(180deg, color-mix(in oklch, var(--background), white 28%), var(--background));
+      radial-gradient(circle at 0% 0%, color-mix(in oklch, var(--primary), transparent 74%), transparent 34rem),
+      radial-gradient(circle at 100% 10%, color-mix(in oklch, var(--accent), transparent 82%), transparent 28rem),
+      linear-gradient(180deg, color-mix(in oklch, var(--background), var(--card) 32%), var(--background));
     min-height: 100svh;
     }
   html {
     @apply font-sans;
     }
+}
+
+@layer components {
+  .app-surface {
+    @apply rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
+  }
+
+  .app-surface-soft {
+    @apply rounded-2xl border border-border/70 bg-muted/55 shadow-sm backdrop-blur;
+  }
+
+  .app-table {
+    @apply overflow-hidden rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
+  }
+
+  .app-header {
+    @apply border-b border-border/80 bg-card/85 shadow-sm backdrop-blur;
+  }
+
+  .app-field {
+    @apply border-input bg-background/70 text-foreground placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/30;
+  }
+
+  .app-link-brand {
+    @apply text-primary;
+  }
 }

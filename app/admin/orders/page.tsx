@@ -38,7 +38,7 @@ export default async function AdminOrdersPage({
         </Button>
       </section>
 
-      <section className="overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 shadow-sm">
+      <section className="app-table">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[920px] text-left text-sm">
             <thead className="border-b bg-muted/50 text-muted-foreground">

@@ -18,10 +18,10 @@ type AdminShellProps = {
 export function AdminShell({ children, title, description }: AdminShellProps) {
   return (
     <main className="min-h-svh">
-      <header className="border-b border-cyan-100/80 bg-white/85 shadow-sm backdrop-blur">
+      <header className="app-header">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between md:px-8">
           <div>
-            <Link href="/admin" className="text-sm font-semibold text-cyan-700">
+            <Link href="/admin" className="app-link-brand text-sm font-semibold">
               Aull Shop Ops
             </Link>
             <h1 className="mt-1 text-2xl font-semibold">{title}</h1>

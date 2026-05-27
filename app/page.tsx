@@ -11,14 +11,14 @@ export default async function Page() {
 
   return (
     <main className="min-h-svh">
-      <section className="border-b border-cyan-100 bg-[linear-gradient(135deg,white,color-mix(in_oklch,var(--primary),white_78%))]">
+      <section className="border-b border-border/80 bg-[linear-gradient(135deg,color-mix(in_oklch,var(--card),transparent_4%),color-mix(in_oklch,var(--primary),var(--background)_72%))]">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 py-10 md:px-8 md:py-14">
           <div className="max-w-3xl space-y-4">
             <StatusBadge tone="blue">K-pop merch PO</StatusBadge>
-            <h1 className="text-4xl font-semibold tracking-normal text-cyan-950 md:text-6xl">
+            <h1 className="text-4xl font-semibold tracking-normal text-foreground md:text-6xl">
               Aull Shop pre-order hub
             </h1>
-            <p className="max-w-2xl text-base leading-7 text-cyan-900/75 md:text-lg">
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
               Pilih merch dari batch PO aktif, upload bukti DP, lalu pantau
               perjalanan order sampai siap checkout Shopee.
             </p>
@@ -48,7 +48,7 @@ export default async function Page() {
         </div>
 
         {batches.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-cyan-200 bg-white/80 p-8 text-sm text-muted-foreground shadow-sm">
+          <div className="app-surface-soft border-dashed p-8 text-sm text-muted-foreground">
             Belum ada batch PO aktif. Jika database belum dikonfigurasi, halaman
             ini akan menampilkan data setelah Supabase dan Prisma siap.
           </div>
@@ -57,7 +57,7 @@ export default async function Page() {
             {batches.map((batch) => (
               <section
                 key={batch.id}
-                className="rounded-2xl border border-cyan-100 bg-white/90 p-4 shadow-sm"
+                className="app-surface p-4"
               >
                 <div className="mb-4 flex flex-col justify-between gap-2 md:flex-row md:items-center">
                   <div>
@@ -78,7 +78,7 @@ export default async function Page() {
                   {batch.products.map((product) => (
                     <article
                       key={product.id}
-                      className="rounded-2xl border border-cyan-100 bg-cyan-50/35 p-4 shadow-sm"
+                      className="app-surface-soft p-4"
                     >
                       <div className="mb-3 flex items-start justify-between gap-3">
                         <div>

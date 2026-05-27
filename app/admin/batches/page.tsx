@@ -28,7 +28,7 @@ export default async function AdminBatchesPage({
       description="Kelola periode PO, buka/tutup batch, dan siapkan katalog merch."
     >
       <AppAlert status={flash.status} message={flash.message} />
-      <section className="mb-6 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+      <section className="app-surface mb-6 p-5">
         <div className="mb-4">
           <h2 className="font-semibold">Tambah PO batch</h2>
           <p className="text-sm text-muted-foreground">
@@ -97,7 +97,7 @@ export default async function AdminBatchesPage({
         </form>
       </section>
 
-      <section className="overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 shadow-sm">
+      <section className="app-table">
         <div className="border-b p-4">
           <h2 className="font-semibold">Daftar batch</h2>
         </div>

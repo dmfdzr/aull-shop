@@ -19,7 +19,7 @@ export default async function AdminLoginPage({
     <main className="grid min-h-svh place-items-center px-5 py-8">
       <form
         action={signInAdminAction}
-        className="grid w-full max-w-sm gap-5 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm backdrop-blur"
+        className="app-surface grid w-full max-w-sm gap-5 p-5"
       >
         <AppAlert
           status={flash.status}

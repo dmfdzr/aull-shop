@@ -67,7 +67,7 @@ export default async function OrderStatusPage({
         </Button>
         <AppAlert status={flash.status} message={flash.message} />
 
-        <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+        <section className="app-surface p-5">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
               <p className="text-sm text-muted-foreground">Order code</p>
@@ -88,7 +88,7 @@ export default async function OrderStatusPage({
         </section>
 
         <section className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <h2 className="mb-3 font-semibold">Item order</h2>
             <div className="space-y-3">
               {order.items.map((item) => (
@@ -110,7 +110,7 @@ export default async function OrderStatusPage({
             </div>
           </div>
 
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <div className="app-surface p-5">
             <h2 className="mb-3 font-semibold">Pembayaran</h2>
             <div className="space-y-3">
               <div className="flex justify-between gap-4 text-sm">
@@ -151,7 +151,7 @@ export default async function OrderStatusPage({
           </div>
         </section>
 
-        <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+        <section className="app-surface p-5">
           <h2 className="mb-4 font-semibold">Timeline pengiriman</h2>
           {order.shipmentEvents.length === 0 ? (
             <p className="text-sm text-muted-foreground">
@@ -180,7 +180,7 @@ export default async function OrderStatusPage({
         </section>
 
         {order.shopeeCheckout ? (
-          <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+          <section className="app-surface p-5">
             <h2 className="mb-2 font-semibold">Checkout Shopee</h2>
             <p className="text-sm text-muted-foreground">
               {order.shopeeCheckout.instructionText ??
@@ -221,7 +221,7 @@ export default async function OrderStatusPage({
           </section>
         ) : null}
 
-        <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+        <section className="app-surface p-5">
           <h2 className="mb-2 font-semibold">Upload pelunasan</h2>
           <p className="mb-4 text-sm text-muted-foreground">
             Gunakan form ini setelah admin menginfokan nominal final.

@@ -35,7 +35,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
               submit, kamu akan mendapatkan order code untuk cek status.
             </p>
           </div>
-          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-4 text-sm leading-6 text-muted-foreground shadow-sm">
+          <div className="app-surface p-4 text-sm leading-6 text-muted-foreground">
             File bukti pembayaran dibatasi maksimal 2 MB dengan format JPG,
             PNG, WebP, atau PDF supaya storage dan bandwidth tetap hemat.
           </div>
@@ -43,7 +43,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
 
         <form
           action={createOrderAction}
-          className="grid gap-5 rounded-2xl border border-cyan-100 bg-white/95 p-5 shadow-sm backdrop-blur"
+          className="app-surface grid gap-5 p-5"
         >
           <AppAlert
             status={flash.status}

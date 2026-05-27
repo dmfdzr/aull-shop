@@ -29,7 +29,7 @@ export default async function AdminProductsPage({
       description="Produk dan varian PO yang tampil untuk customer."
     >
       <AppAlert status={flash.status} message={flash.message} />
-      <section className="mb-6 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
+      <section className="app-surface mb-6 p-5">
         <div className="mb-4">
           <h2 className="font-semibold">Tambah produk</h2>
           <p className="text-sm text-muted-foreground">
@@ -130,7 +130,7 @@ export default async function AdminProductsPage({
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {products.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-cyan-200 bg-white/80 p-8 text-sm text-muted-foreground shadow-sm">
+          <div className="app-surface-soft border-dashed p-8 text-sm text-muted-foreground">
             Belum ada produk. Setelah form CRUD dibuat, admin bisa menambahkan
             item merch, varian, harga estimasi, dan minimum DP di sini.
           </div>
@@ -138,7 +138,7 @@ export default async function AdminProductsPage({
           products.map((product) => (
             <article
               key={product.id}
-              className="rounded-2xl border border-cyan-100 bg-white/90 p-4 shadow-sm"
+              className="app-surface p-4"
             >
               <div className="mb-3 flex items-start justify-between gap-3">
                 <div>
