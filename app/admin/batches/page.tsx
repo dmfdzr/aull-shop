@@ -1,4 +1,5 @@
 import { AdminShell } from "@/components/admin-shell"
+import { AppAlert } from "@/components/app-alert"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { getBatches } from "@/lib/admin-data"
@@ -7,8 +8,18 @@ import { createBatchAction, updateBatchStatusAction } from "./actions"
 
 export const dynamic = "force-dynamic"
 
-export default async function AdminBatchesPage() {
+type AdminBatchesPageProps = {
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
+}
+
+export default async function AdminBatchesPage({
+  searchParams,
+}: AdminBatchesPageProps) {
   await requireAdminUser()
+  const flash = await searchParams
   const batches = await getBatches()
 
   return (
@@ -16,7 +27,8 @@ export default async function AdminBatchesPage() {
       title="PO Batch"
       description="Kelola periode PO, buka/tutup batch, dan siapkan katalog merch."
     >
-      <section className="mb-6 rounded-lg border bg-card p-5">
+      <AppAlert status={flash.status} message={flash.message} />
+      <section className="mb-6 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
         <div className="mb-4">
           <h2 className="font-semibold">Tambah PO batch</h2>
           <p className="text-sm text-muted-foreground">
@@ -85,7 +97,7 @@ export default async function AdminBatchesPage() {
         </form>
       </section>
 
-      <section className="rounded-lg border bg-card">
+      <section className="overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 shadow-sm">
         <div className="border-b p-4">
           <h2 className="font-semibold">Daftar batch</h2>
         </div>

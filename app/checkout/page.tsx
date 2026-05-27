@@ -1,16 +1,25 @@
 import Link from "next/link"
 import { createOrderAction } from "@/app/actions/orders"
+import { AppAlert } from "@/components/app-alert"
 import { Button } from "@/components/ui/button"
 import { getCheckoutOptions } from "@/lib/catalog"
 import { formatCurrency } from "@/lib/format"
 
 export const dynamic = "force-dynamic"
 
-export default async function CheckoutPage() {
+type CheckoutPageProps = {
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
+}
+
+export default async function CheckoutPage({ searchParams }: CheckoutPageProps) {
+  const flash = await searchParams
   const options = await getCheckoutOptions()
 
   return (
-    <main className="min-h-svh bg-background">
+    <main className="min-h-svh">
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-12">
         <aside className="space-y-4">
           <Button asChild variant="ghost" className="px-0">
@@ -26,7 +35,7 @@ export default async function CheckoutPage() {
               submit, kamu akan mendapatkan order code untuk cek status.
             </p>
           </div>
-          <div className="rounded-lg border bg-card p-4 text-sm leading-6 text-muted-foreground">
+          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-4 text-sm leading-6 text-muted-foreground shadow-sm">
             File bukti pembayaran dibatasi maksimal 2 MB dengan format JPG,
             PNG, WebP, atau PDF supaya storage dan bandwidth tetap hemat.
           </div>
@@ -34,8 +43,13 @@ export default async function CheckoutPage() {
 
         <form
           action={createOrderAction}
-          className="grid gap-5 rounded-lg border bg-card p-5"
+          className="grid gap-5 rounded-2xl border border-cyan-100 bg-white/95 p-5 shadow-sm backdrop-blur"
         >
+          <AppAlert
+            status={flash.status}
+            message={flash.message}
+            className="mb-0"
+          />
           <div className="grid gap-2">
             <label className="text-sm font-medium" htmlFor="customerName">
               Nama pemesan

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { requireAdminUser } from "@/lib/auth"
 import { assertDatabaseConfigured } from "@/lib/env"
+import { redirectWithFlash } from "@/lib/flash"
 import { prisma } from "@/lib/prisma"
 
 const createBatchSchema = z.object({
@@ -43,24 +44,33 @@ export async function createBatchAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Data batch tidak valid.")
+    redirectWithFlash(
+      "/admin/batches",
+      "error",
+      parsed.error.issues[0]?.message ?? "Data batch tidak valid."
+    )
   }
 
-  await prisma.poBatch.create({
-    data: {
-      name: parsed.data.name,
-      description: parsed.data.description || null,
-      sourceCountry: parsed.data.sourceCountry || null,
-      openAt: parseDateInput(parsed.data.openAt),
-      closeAt: parseDateInput(parsed.data.closeAt),
-      status: parsed.data.status,
-    },
-  })
+  try {
+    await prisma.poBatch.create({
+      data: {
+        name: parsed.data.name,
+        description: parsed.data.description || null,
+        sourceCountry: parsed.data.sourceCountry || null,
+        openAt: parseDateInput(parsed.data.openAt),
+        closeAt: parseDateInput(parsed.data.closeAt),
+        status: parsed.data.status,
+      },
+    })
+  } catch {
+    redirectWithFlash("/admin/batches", "error", "Batch gagal disimpan.")
+  }
 
   revalidatePath("/admin/batches")
   revalidatePath("/admin/products")
   revalidatePath("/")
   revalidatePath("/checkout")
+  redirectWithFlash("/admin/batches", "success", "PO batch berhasil disimpan.")
 }
 
 const updateBatchStatusSchema = z.object({
@@ -78,20 +88,25 @@ export async function updateBatchStatusAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Status batch tidak valid.")
+    redirectWithFlash("/admin/batches", "error", "Status batch tidak valid.")
   }
 
-  await prisma.poBatch.update({
-    where: {
-      id: parsed.data.id,
-    },
-    data: {
-      status: parsed.data.status,
-    },
-  })
+  try {
+    await prisma.poBatch.update({
+      where: {
+        id: parsed.data.id,
+      },
+      data: {
+        status: parsed.data.status,
+      },
+    })
+  } catch {
+    redirectWithFlash("/admin/batches", "error", "Status batch gagal diupdate.")
+  }
 
   revalidatePath("/admin/batches")
   revalidatePath("/admin/products")
   revalidatePath("/")
   revalidatePath("/checkout")
+  redirectWithFlash("/admin/batches", "success", "Status batch berhasil diupdate.")
 }

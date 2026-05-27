@@ -1,14 +1,31 @@
 import Link from "next/link"
 import { signInAdminAction } from "@/app/admin/login/actions"
+import { AppAlert } from "@/components/app-alert"
 import { Button } from "@/components/ui/button"
 
-export default function AdminLoginPage() {
+type AdminLoginPageProps = {
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
+}
+
+export default async function AdminLoginPage({
+  searchParams,
+}: AdminLoginPageProps) {
+  const flash = await searchParams
+
   return (
-    <main className="grid min-h-svh place-items-center bg-muted/30 px-5 py-8">
+    <main className="grid min-h-svh place-items-center px-5 py-8">
       <form
         action={signInAdminAction}
-        className="grid w-full max-w-sm gap-5 rounded-lg border bg-card p-5"
+        className="grid w-full max-w-sm gap-5 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm backdrop-blur"
       >
+        <AppAlert
+          status={flash.status}
+          message={flash.message}
+          className="mb-0"
+        />
         <div>
           <p className="text-sm font-medium text-primary">Admin area</p>
           <h1 className="mt-1 text-2xl font-semibold">Login Aull Shop</h1>

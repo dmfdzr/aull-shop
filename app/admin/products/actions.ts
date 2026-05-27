@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { requireAdminUser } from "@/lib/auth"
 import { assertDatabaseConfigured } from "@/lib/env"
+import { redirectWithFlash } from "@/lib/flash"
 import { prisma } from "@/lib/prisma"
 
 const createProductSchema = z.object({
@@ -50,37 +51,46 @@ export async function createProductAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Data produk tidak valid.")
+    redirectWithFlash(
+      "/admin/products",
+      "error",
+      parsed.error.issues[0]?.message ?? "Data produk tidak valid."
+    )
   }
 
   const variants = parseVariantLines(parsed.data.variants)
 
   if (variants.length === 0) {
-    throw new Error("Minimal satu varian wajib diisi.")
+    redirectWithFlash("/admin/products", "error", "Minimal satu varian wajib diisi.")
   }
 
   if (variants.some((variant) => variant.quota !== null && Number.isNaN(variant.quota))) {
-    throw new Error("Format kuota varian tidak valid.")
+    redirectWithFlash("/admin/products", "error", "Format kuota varian tidak valid.")
   }
 
-  await prisma.product.create({
-    data: {
-      batchId: parsed.data.batchId,
-      name: parsed.data.name,
-      description: parsed.data.description || null,
-      sourceCountry: parsed.data.sourceCountry || null,
-      sourceUrl: parsed.data.sourceUrl || null,
-      estimatedPrice: parsed.data.estimatedPrice,
-      minimumDp: parsed.data.minimumDp,
-      variants: {
-        create: variants,
+  try {
+    await prisma.product.create({
+      data: {
+        batchId: parsed.data.batchId,
+        name: parsed.data.name,
+        description: parsed.data.description || null,
+        sourceCountry: parsed.data.sourceCountry || null,
+        sourceUrl: parsed.data.sourceUrl || null,
+        estimatedPrice: parsed.data.estimatedPrice,
+        minimumDp: parsed.data.minimumDp,
+        variants: {
+          create: variants,
+        },
       },
-    },
-  })
+    })
+  } catch {
+    redirectWithFlash("/admin/products", "error", "Produk gagal disimpan.")
+  }
 
   revalidatePath("/admin/products")
   revalidatePath("/")
   revalidatePath("/checkout")
+  redirectWithFlash("/admin/products", "success", "Produk berhasil disimpan.")
 }
 
 const toggleProductSchema = z.object({
@@ -98,19 +108,24 @@ export async function toggleProductAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Status produk tidak valid.")
+    redirectWithFlash("/admin/products", "error", "Status produk tidak valid.")
   }
 
-  await prisma.product.update({
-    where: {
-      id: parsed.data.id,
-    },
-    data: {
-      isActive: parsed.data.isActive === "true",
-    },
-  })
+  try {
+    await prisma.product.update({
+      where: {
+        id: parsed.data.id,
+      },
+      data: {
+        isActive: parsed.data.isActive === "true",
+      },
+    })
+  } catch {
+    redirectWithFlash("/admin/products", "error", "Status produk gagal diupdate.")
+  }
 
   revalidatePath("/admin/products")
   revalidatePath("/")
   revalidatePath("/checkout")
+  redirectWithFlash("/admin/products", "success", "Status produk berhasil diupdate.")
 }

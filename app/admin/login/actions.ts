@@ -1,6 +1,7 @@
 "use server"
 
 import { redirect } from "next/navigation"
+import { redirectWithFlash } from "@/lib/flash"
 import { createSupabaseServerClient } from "@/lib/supabase/server"
 
 export async function signInAdminAction(formData: FormData) {
@@ -8,7 +9,7 @@ export async function signInAdminAction(formData: FormData) {
   const password = String(formData.get("password") ?? "")
 
   if (!email || !password) {
-    throw new Error("Email dan password wajib diisi.")
+    redirectWithFlash("/admin/login", "error", "Email dan password wajib diisi.")
   }
 
   const supabase = await createSupabaseServerClient()
@@ -18,8 +19,8 @@ export async function signInAdminAction(formData: FormData) {
   })
 
   if (error) {
-    throw new Error("Login gagal. Cek email dan password.")
+    redirectWithFlash("/admin/login", "error", "Login gagal. Cek email dan password.")
   }
 
-  redirect("/admin")
+  redirect("/admin?status=success&message=Login%20berhasil.")
 }

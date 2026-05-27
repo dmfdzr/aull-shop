@@ -1,4 +1,5 @@
 import { AdminShell } from "@/components/admin-shell"
+import { AppAlert } from "@/components/app-alert"
 import { StatusBadge } from "@/components/status-badge"
 import { getAdminDashboardStats, getRecentOrders } from "@/lib/admin-data"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
@@ -6,8 +7,18 @@ import { requireAdminUser } from "@/lib/auth"
 
 export const dynamic = "force-dynamic"
 
-export default async function AdminDashboardPage() {
+type AdminDashboardPageProps = {
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
+}
+
+export default async function AdminDashboardPage({
+  searchParams,
+}: AdminDashboardPageProps) {
   await requireAdminUser()
+  const flash = await searchParams
   const [stats, recentOrders] = await Promise.all([
     getAdminDashboardStats(),
     getRecentOrders(),
@@ -26,16 +37,20 @@ export default async function AdminDashboardPage() {
       title="Dashboard"
       description="Ringkasan operasional PO dan pekerjaan yang perlu dicek."
     >
+      <AppAlert status={flash.status} message={flash.message} />
       <section className="grid gap-3 md:grid-cols-5">
         {statCards.map((card) => (
-          <div key={card.label} className="rounded-lg border bg-card p-4">
+          <div
+            key={card.label}
+            className="rounded-2xl border border-cyan-100 bg-white/90 p-4 shadow-sm"
+          >
             <p className="text-sm text-muted-foreground">{card.label}</p>
             <p className="mt-2 text-3xl font-semibold">{card.value}</p>
           </div>
         ))}
       </section>
 
-      <section className="mt-6 rounded-lg border bg-card">
+      <section className="mt-6 overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 shadow-sm">
         <div className="border-b p-4">
           <h2 className="font-semibold">Order terbaru</h2>
           <p className="text-sm text-muted-foreground">

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
+import { AppAlert } from "@/components/app-alert"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
@@ -16,12 +17,18 @@ type OrderStatusPageProps = {
   params: Promise<{
     orderCode: string
   }>
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
 }
 
 export default async function OrderStatusPage({
   params,
+  searchParams,
 }: OrderStatusPageProps) {
   const { orderCode } = await params
+  const flash = await searchParams
 
   if (!isDatabaseConfigured()) {
     notFound()
@@ -53,13 +60,14 @@ export default async function OrderStatusPage({
   }
 
   return (
-    <main className="min-h-svh bg-background">
+    <main className="min-h-svh">
       <div className="mx-auto w-full max-w-4xl space-y-6 px-5 py-8 md:px-8 md:py-12">
         <Button asChild variant="ghost" className="px-0">
           <Link href="/">Kembali ke katalog</Link>
         </Button>
+        <AppAlert status={flash.status} message={flash.message} />
 
-        <section className="rounded-lg border bg-card p-5">
+        <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
               <p className="text-sm text-muted-foreground">Order code</p>
@@ -80,7 +88,7 @@ export default async function OrderStatusPage({
         </section>
 
         <section className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-lg border bg-card p-5">
+          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
             <h2 className="mb-3 font-semibold">Item order</h2>
             <div className="space-y-3">
               {order.items.map((item) => (
@@ -102,7 +110,7 @@ export default async function OrderStatusPage({
             </div>
           </div>
 
-          <div className="rounded-lg border bg-card p-5">
+          <div className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
             <h2 className="mb-3 font-semibold">Pembayaran</h2>
             <div className="space-y-3">
               <div className="flex justify-between gap-4 text-sm">
@@ -143,7 +151,7 @@ export default async function OrderStatusPage({
           </div>
         </section>
 
-        <section className="rounded-lg border bg-card p-5">
+        <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
           <h2 className="mb-4 font-semibold">Timeline pengiriman</h2>
           {order.shipmentEvents.length === 0 ? (
             <p className="text-sm text-muted-foreground">
@@ -172,7 +180,7 @@ export default async function OrderStatusPage({
         </section>
 
         {order.shopeeCheckout ? (
-          <section className="rounded-lg border bg-card p-5">
+          <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
             <h2 className="mb-2 font-semibold">Checkout Shopee</h2>
             <p className="text-sm text-muted-foreground">
               {order.shopeeCheckout.instructionText ??
@@ -213,7 +221,7 @@ export default async function OrderStatusPage({
           </section>
         ) : null}
 
-        <section className="rounded-lg border bg-card p-5">
+        <section className="rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
           <h2 className="mb-2 font-semibold">Upload pelunasan</h2>
           <p className="mb-4 text-sm text-muted-foreground">
             Gunakan form ini setelah admin menginfokan nominal final.

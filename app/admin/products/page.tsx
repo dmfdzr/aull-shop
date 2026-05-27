@@ -1,4 +1,5 @@
 import { AdminShell } from "@/components/admin-shell"
+import { AppAlert } from "@/components/app-alert"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { getBatches, getProducts } from "@/lib/admin-data"
@@ -8,8 +9,18 @@ import { createProductAction, toggleProductAction } from "./actions"
 
 export const dynamic = "force-dynamic"
 
-export default async function AdminProductsPage() {
+type AdminProductsPageProps = {
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
+}
+
+export default async function AdminProductsPage({
+  searchParams,
+}: AdminProductsPageProps) {
   await requireAdminUser()
+  const flash = await searchParams
   const [products, batches] = await Promise.all([getProducts(), getBatches()])
 
   return (
@@ -17,7 +28,8 @@ export default async function AdminProductsPage() {
       title="Katalog"
       description="Produk dan varian PO yang tampil untuk customer."
     >
-      <section className="mb-6 rounded-lg border bg-card p-5">
+      <AppAlert status={flash.status} message={flash.message} />
+      <section className="mb-6 rounded-2xl border border-cyan-100 bg-white/90 p-5 shadow-sm">
         <div className="mb-4">
           <h2 className="font-semibold">Tambah produk</h2>
           <p className="text-sm text-muted-foreground">
@@ -118,13 +130,16 @@ export default async function AdminProductsPage() {
 
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {products.length === 0 ? (
-          <div className="rounded-lg border border-dashed bg-card p-8 text-sm text-muted-foreground">
+          <div className="rounded-2xl border border-dashed border-cyan-200 bg-white/80 p-8 text-sm text-muted-foreground shadow-sm">
             Belum ada produk. Setelah form CRUD dibuat, admin bisa menambahkan
             item merch, varian, harga estimasi, dan minimum DP di sini.
           </div>
         ) : (
           products.map((product) => (
-            <article key={product.id} className="rounded-lg border bg-card p-4">
+            <article
+              key={product.id}
+              className="rounded-2xl border border-cyan-100 bg-white/90 p-4 shadow-sm"
+            >
               <div className="mb-3 flex items-start justify-between gap-3">
                 <div>
                   <h2 className="font-semibold">{product.name}</h2>

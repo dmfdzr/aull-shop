@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { requireAdminUser } from "@/lib/auth"
 import { assertDatabaseConfigured } from "@/lib/env"
+import { redirectWithFlash } from "@/lib/flash"
 import { prisma } from "@/lib/prisma"
 
 const verifyPaymentSchema = z.object({
@@ -24,22 +25,36 @@ export async function verifyPaymentAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Data verifikasi pembayaran tidak valid.")
+    redirectWithFlash(
+      `/admin/orders/${formData.get("orderId") ?? ""}`,
+      "error",
+      "Data verifikasi pembayaran tidak valid."
+    )
   }
 
-  const payment = await prisma.payment.update({
-    where: {
-      id: parsed.data.paymentId,
-    },
-    data: {
-      verificationStatus: parsed.data.status,
-      rejectionReason:
-        parsed.data.status === "REJECTED"
-          ? parsed.data.rejectionReason || "Bukti pembayaran ditolak."
-          : null,
-      verifiedAt: new Date(),
-    },
-  })
+  let payment
+
+  try {
+    payment = await prisma.payment.update({
+      where: {
+        id: parsed.data.paymentId,
+      },
+      data: {
+        verificationStatus: parsed.data.status,
+        rejectionReason:
+          parsed.data.status === "REJECTED"
+            ? parsed.data.rejectionReason || "Bukti pembayaran ditolak."
+            : null,
+        verifiedAt: new Date(),
+      },
+    })
+  } catch {
+    redirectWithFlash(
+      `/admin/orders/${parsed.data.orderId}`,
+      "error",
+      "Verifikasi pembayaran gagal."
+    )
+  }
 
   const nextPaymentStatus =
     parsed.data.status === "REJECTED"
@@ -61,6 +76,11 @@ export async function verifyPaymentAction(formData: FormData) {
   revalidatePath(`/admin/orders/${parsed.data.orderId}`)
   revalidatePath("/admin/orders")
   revalidatePath("/admin")
+  redirectWithFlash(
+    `/admin/orders/${parsed.data.orderId}`,
+    "success",
+    "Verifikasi pembayaran berhasil disimpan."
+  )
 }
 
 const shipmentEventSchema = z.object({
@@ -94,41 +114,58 @@ export async function addShipmentEventAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Data shipment tidak valid.")
+    redirectWithFlash(
+      `/admin/orders/${formData.get("orderId") ?? ""}`,
+      "error",
+      "Data shipment tidak valid."
+    )
   }
 
-  await prisma.$transaction([
-    prisma.shipmentEvent.create({
-      data: {
-        orderId: parsed.data.orderId,
-        stage: parsed.data.stage,
-        location: parsed.data.location || null,
-        trackingNumber: parsed.data.trackingNumber || null,
-        notes: parsed.data.notes || null,
-        eventAt: new Date(),
-      },
-    }),
-    prisma.order.update({
-      where: {
-        id: parsed.data.orderId,
-      },
-      data: {
-        shipmentStatus: parsed.data.stage,
-        orderStatus:
-          parsed.data.stage === "ORDERED_TO_SOURCE"
-            ? "ORDERED_TO_SOURCE"
-            : parsed.data.stage === "SHOPEE_CHECKOUT_PENDING"
-              ? "READY_FOR_SHOPEE"
-              : parsed.data.stage === "DELIVERED"
-                ? "COMPLETED"
-                : undefined,
-      },
-    }),
-  ])
+  try {
+    await prisma.$transaction([
+      prisma.shipmentEvent.create({
+        data: {
+          orderId: parsed.data.orderId,
+          stage: parsed.data.stage,
+          location: parsed.data.location || null,
+          trackingNumber: parsed.data.trackingNumber || null,
+          notes: parsed.data.notes || null,
+          eventAt: new Date(),
+        },
+      }),
+      prisma.order.update({
+        where: {
+          id: parsed.data.orderId,
+        },
+        data: {
+          shipmentStatus: parsed.data.stage,
+          orderStatus:
+            parsed.data.stage === "ORDERED_TO_SOURCE"
+              ? "ORDERED_TO_SOURCE"
+              : parsed.data.stage === "SHOPEE_CHECKOUT_PENDING"
+                ? "READY_FOR_SHOPEE"
+                : parsed.data.stage === "DELIVERED"
+                  ? "COMPLETED"
+                  : undefined,
+        },
+      }),
+    ])
+  } catch {
+    redirectWithFlash(
+      `/admin/orders/${parsed.data.orderId}`,
+      "error",
+      "Shipment event gagal disimpan."
+    )
+  }
 
   revalidatePath(`/admin/orders/${parsed.data.orderId}`)
   revalidatePath("/admin/orders")
   revalidatePath("/admin")
+  redirectWithFlash(
+    `/admin/orders/${parsed.data.orderId}`,
+    "success",
+    "Shipment event berhasil ditambahkan."
+  )
 }
 
 const shopeeInstructionSchema = z.object({
@@ -147,36 +184,53 @@ export async function upsertShopeeInstructionAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Instruksi Shopee tidak valid.")
+    redirectWithFlash(
+      `/admin/orders/${formData.get("orderId") ?? ""}`,
+      "error",
+      "Instruksi Shopee tidak valid."
+    )
   }
 
-  await prisma.$transaction([
-    prisma.shopeeCheckout.upsert({
-      where: {
-        orderId: parsed.data.orderId,
-      },
-      update: {
-        instructionText: parsed.data.instructionText,
-        instructionUrl: parsed.data.instructionUrl || null,
-      },
-      create: {
-        orderId: parsed.data.orderId,
-        instructionText: parsed.data.instructionText,
-        instructionUrl: parsed.data.instructionUrl || null,
-      },
-    }),
-    prisma.order.update({
-      where: {
-        id: parsed.data.orderId,
-      },
-      data: {
-        orderStatus: "READY_FOR_SHOPEE",
-        shipmentStatus: "SHOPEE_CHECKOUT_PENDING",
-      },
-    }),
-  ])
+  try {
+    await prisma.$transaction([
+      prisma.shopeeCheckout.upsert({
+        where: {
+          orderId: parsed.data.orderId,
+        },
+        update: {
+          instructionText: parsed.data.instructionText,
+          instructionUrl: parsed.data.instructionUrl || null,
+        },
+        create: {
+          orderId: parsed.data.orderId,
+          instructionText: parsed.data.instructionText,
+          instructionUrl: parsed.data.instructionUrl || null,
+        },
+      }),
+      prisma.order.update({
+        where: {
+          id: parsed.data.orderId,
+        },
+        data: {
+          orderStatus: "READY_FOR_SHOPEE",
+          shipmentStatus: "SHOPEE_CHECKOUT_PENDING",
+        },
+      }),
+    ])
+  } catch {
+    redirectWithFlash(
+      `/admin/orders/${parsed.data.orderId}`,
+      "error",
+      "Instruksi Shopee gagal disimpan."
+    )
+  }
 
   revalidatePath(`/admin/orders/${parsed.data.orderId}`)
   revalidatePath("/admin/orders")
   revalidatePath("/admin")
+  redirectWithFlash(
+    `/admin/orders/${parsed.data.orderId}`,
+    "success",
+    "Instruksi Shopee berhasil disimpan."
+  )
 }

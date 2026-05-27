@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { AdminShell } from "@/components/admin-shell"
+import { AppAlert } from "@/components/app-alert"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { getRecentOrders } from "@/lib/admin-data"
@@ -8,8 +9,18 @@ import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/f
 
 export const dynamic = "force-dynamic"
 
-export default async function AdminOrdersPage() {
+type AdminOrdersPageProps = {
+  searchParams: Promise<{
+    status?: string
+    message?: string
+  }>
+}
+
+export default async function AdminOrdersPage({
+  searchParams,
+}: AdminOrdersPageProps) {
   await requireAdminUser()
+  const flash = await searchParams
   const orders = await getRecentOrders()
 
   return (
@@ -17,6 +28,7 @@ export default async function AdminOrdersPage() {
       title="Masterlist"
       description="Daftar order PO dengan status pembayaran dan shipment terpisah."
     >
+      <AppAlert status={flash.status} message={flash.message} />
       <section className="mb-4 flex flex-wrap gap-2">
         <Button asChild variant="outline">
           <Link href="/api/admin/orders/export?format=csv">Export CSV</Link>
@@ -26,7 +38,7 @@ export default async function AdminOrdersPage() {
         </Button>
       </section>
 
-      <section className="rounded-lg border bg-card">
+      <section className="overflow-hidden rounded-2xl border border-cyan-100 bg-white/90 shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[920px] text-left text-sm">
             <thead className="border-b bg-muted/50 text-muted-foreground">

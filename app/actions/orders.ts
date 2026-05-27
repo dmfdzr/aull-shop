@@ -1,9 +1,9 @@
 "use server"
 
-import { redirect } from "next/navigation"
 import { z } from "zod"
 import { prisma } from "@/lib/prisma"
 import { assertDatabaseConfigured } from "@/lib/env"
+import { redirectWithFlash } from "@/lib/flash"
 import { createOrderCode } from "@/lib/order-code"
 import { buildProofPath, PROOF_BUCKET, validateProofFile } from "@/lib/storage"
 import { createSupabaseAdminClient } from "@/lib/supabase/admin"
@@ -35,17 +35,21 @@ export async function createOrderAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error(parsed.error.issues[0]?.message ?? "Data order tidak valid.")
+    redirectWithFlash(
+      "/checkout",
+      "error",
+      parsed.error.issues[0]?.message ?? "Data order tidak valid."
+    )
   }
 
   if (!(proofFile instanceof File)) {
-    throw new Error("Bukti pembayaran wajib diupload.")
+    redirectWithFlash("/checkout", "error", "Bukti pembayaran wajib diupload.")
   }
 
   const proofError = validateProofFile(proofFile)
 
   if (proofError) {
-    throw new Error(proofError)
+    redirectWithFlash("/checkout", "error", proofError)
   }
 
   const variant = await prisma.productVariant.findUnique({
@@ -63,15 +67,15 @@ export async function createOrderAction(formData: FormData) {
   })
 
   if (!variant || !variant.product.isActive) {
-    throw new Error("Produk atau varian tidak tersedia.")
+    redirectWithFlash("/checkout", "error", "Produk atau varian tidak tersedia.")
   }
 
   if (variant.product.batch.status !== "OPEN") {
-    throw new Error("PO sudah ditutup untuk produk ini.")
+    redirectWithFlash("/checkout", "error", "PO sudah ditutup untuk produk ini.")
   }
 
   if (variant.quota !== null && parsed.data.quantity > variant.quota) {
-    throw new Error("Jumlah order melebihi kuota varian.")
+    redirectWithFlash("/checkout", "error", "Jumlah order melebihi kuota varian.")
   }
 
   const orderCode = createOrderCode()
@@ -90,7 +94,11 @@ export async function createOrderAction(formData: FormData) {
     })
 
   if (uploadResult.error) {
-    throw new Error("Upload bukti pembayaran gagal. Coba lagi.")
+    redirectWithFlash(
+      "/checkout",
+      "error",
+      "Upload bukti pembayaran gagal. Coba lagi."
+    )
   }
 
   try {
@@ -140,10 +148,10 @@ export async function createOrderAction(formData: FormData) {
         },
       })
     })
-  } catch (error) {
+  } catch {
     await supabase.storage.from(PROOF_BUCKET).remove([proofPath])
-    throw error
+    redirectWithFlash("/checkout", "error", "Order gagal disimpan. Coba lagi.")
   }
 
-  redirect(`/order/${orderCode}`)
+  redirectWithFlash(`/order/${orderCode}`, "success", "Order berhasil dibuat.")
 }

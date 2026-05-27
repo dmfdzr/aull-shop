@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { z } from "zod"
 import { prisma } from "@/lib/prisma"
 import { assertDatabaseConfigured } from "@/lib/env"
+import { redirectWithFlash } from "@/lib/flash"
 import { buildProofPath, PROOF_BUCKET, validateProofFile } from "@/lib/storage"
 import { createSupabaseAdminClient } from "@/lib/supabase/admin"
 
@@ -22,17 +23,25 @@ export async function submitFinalPaymentAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Data pelunasan tidak valid.")
+    redirectWithFlash(
+      `/order/${formData.get("orderCode") ?? ""}`,
+      "error",
+      "Data pelunasan tidak valid."
+    )
   }
 
   if (!(proofFile instanceof File)) {
-    throw new Error("Bukti pelunasan wajib diupload.")
+    redirectWithFlash(
+      `/order/${parsed.data.orderCode}`,
+      "error",
+      "Bukti pelunasan wajib diupload."
+    )
   }
 
   const proofError = validateProofFile(proofFile)
 
   if (proofError) {
-    throw new Error(proofError)
+    redirectWithFlash(`/order/${parsed.data.orderCode}`, "error", proofError)
   }
 
   const order = await prisma.order.findUnique({
@@ -42,7 +51,7 @@ export async function submitFinalPaymentAction(formData: FormData) {
   })
 
   if (!order) {
-    throw new Error("Order tidak ditemukan.")
+    redirectWithFlash(`/order/${parsed.data.orderCode}`, "error", "Order tidak ditemukan.")
   }
 
   const proofPath = buildProofPath(`${order.orderCode}-final`, proofFile)
@@ -55,7 +64,11 @@ export async function submitFinalPaymentAction(formData: FormData) {
     })
 
   if (uploadResult.error) {
-    throw new Error("Upload bukti pelunasan gagal.")
+    redirectWithFlash(
+      `/order/${order.orderCode}`,
+      "error",
+      "Upload bukti pelunasan gagal."
+    )
   }
 
   try {
@@ -77,12 +90,21 @@ export async function submitFinalPaymentAction(formData: FormData) {
         },
       }),
     ])
-  } catch (error) {
+  } catch {
     await supabase.storage.from(PROOF_BUCKET).remove([proofPath])
-    throw error
+    redirectWithFlash(
+      `/order/${order.orderCode}`,
+      "error",
+      "Bukti pelunasan gagal disimpan."
+    )
   }
 
   revalidatePath(`/order/${order.orderCode}`)
+  redirectWithFlash(
+    `/order/${order.orderCode}`,
+    "success",
+    "Bukti pelunasan berhasil dikirim."
+  )
 }
 
 const shopeeProofSchema = z.object({
@@ -100,7 +122,11 @@ export async function submitShopeeCheckoutProofAction(formData: FormData) {
   })
 
   if (!parsed.success) {
-    throw new Error("Data checkout Shopee tidak valid.")
+    redirectWithFlash(
+      `/order/${formData.get("orderCode") ?? ""}`,
+      "error",
+      "Data checkout Shopee tidak valid."
+    )
   }
 
   const order = await prisma.order.findUnique({
@@ -113,7 +139,11 @@ export async function submitShopeeCheckoutProofAction(formData: FormData) {
   })
 
   if (!order || !order.shopeeCheckout) {
-    throw new Error("Instruksi checkout Shopee belum tersedia.")
+    redirectWithFlash(
+      `/order/${parsed.data.orderCode}`,
+      "error",
+      "Instruksi checkout Shopee belum tersedia."
+    )
   }
 
   let proofPath: string | null = null
@@ -122,7 +152,7 @@ export async function submitShopeeCheckoutProofAction(formData: FormData) {
     const proofError = validateProofFile(proofFile)
 
     if (proofError) {
-      throw new Error(proofError)
+      redirectWithFlash(`/order/${order.orderCode}`, "error", proofError)
     }
 
     proofPath = buildProofPath(`${order.orderCode}-shopee`, proofFile)
@@ -135,7 +165,11 @@ export async function submitShopeeCheckoutProofAction(formData: FormData) {
       })
 
     if (uploadResult.error) {
-      throw new Error("Upload bukti checkout Shopee gagal.")
+      redirectWithFlash(
+        `/order/${order.orderCode}`,
+        "error",
+        "Upload bukti checkout Shopee gagal."
+      )
     }
   }
 
@@ -151,4 +185,9 @@ export async function submitShopeeCheckoutProofAction(formData: FormData) {
   })
 
   revalidatePath(`/order/${order.orderCode}`)
+  redirectWithFlash(
+    `/order/${order.orderCode}`,
+    "success",
+    "Bukti checkout Shopee berhasil dikirim."
+  )
 }
