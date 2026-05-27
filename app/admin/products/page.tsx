@@ -122,7 +122,7 @@ export default async function AdminProductsPage({
           </label>
           <div className="lg:col-span-6">
             <Button type="submit" disabled={batches.length === 0}>
-              Simpan produk
+              Tambah produk ke katalog
             </Button>
           </div>
         </form>
@@ -183,8 +183,11 @@ export default async function AdminProductsPage({
                   value={product.isActive ? "false" : "true"}
                 />
                 <Button type="submit" variant="outline" size="sm">
-                  {product.isActive ? "Nonaktifkan" : "Aktifkan"}
+                  {product.isActive ? "Sembunyikan produk" : "Tampilkan produk"}
                 </Button>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Produk tersembunyi tidak muncul di katalog customer.
+                </p>
               </form>
             </article>
           ))

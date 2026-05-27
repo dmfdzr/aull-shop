@@ -8,6 +8,10 @@ export const dynamic = "force-dynamic"
 
 export default async function Page() {
   const batches = await getActiveCatalog()
+  const productCount = batches.reduce(
+    (total, batch) => total + batch.products.length,
+    0
+  )
 
   return (
     <main className="min-h-svh">
@@ -28,7 +32,7 @@ export default async function Page() {
               <Link href="/checkout">Buat order PO</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link href="/admin">Masuk admin</Link>
+              <Link href="/admin">Kelola toko</Link>
             </Button>
           </div>
         </div>
@@ -42,9 +46,14 @@ export default async function Page() {
               Batch yang masih terbuka untuk pemesanan.
             </p>
           </div>
-          <Button asChild variant="outline">
-            <Link href="/checkout">Order dari katalog</Link>
-          </Button>
+          <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+            <StatusBadge tone={batches.length > 0 ? "green" : "neutral"}>
+              {batches.length} batch open
+            </StatusBadge>
+            <StatusBadge tone={productCount > 0 ? "blue" : "neutral"}>
+              {productCount} produk tersedia
+            </StatusBadge>
+          </div>
         </div>
 
         {batches.length === 0 ? (
@@ -71,7 +80,12 @@ export default async function Page() {
                         : "Belum ditentukan"}
                     </p>
                   </div>
-                  <StatusBadge tone="green">OPEN</StatusBadge>
+                  <div className="flex flex-wrap gap-2">
+                    <StatusBadge tone="green">OPEN</StatusBadge>
+                    <Button asChild variant="outline" size="sm">
+                      <Link href="/checkout">Pesan dari batch ini</Link>
+                    </Button>
+                  </div>
                 </div>
 
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">

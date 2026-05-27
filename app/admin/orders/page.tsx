@@ -87,7 +87,7 @@ export default async function AdminOrdersPage({
                     </td>
                     <td className="px-4 py-3">
                       <Button asChild variant="outline" size="sm">
-                        <Link href={`/admin/orders/${order.id}`}>Buka</Link>
+                        <Link href={`/admin/orders/${order.id}`}>Lihat order</Link>
                       </Button>
                     </td>
                   </tr>

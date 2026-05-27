@@ -91,7 +91,7 @@ export default async function AdminBatchesPage({
           </label>
           <div className="flex items-end">
             <Button type="submit" className="w-full">
-              Simpan batch
+              Simpan PO batch
             </Button>
           </div>
         </form>
@@ -143,23 +143,28 @@ export default async function AdminBatchesPage({
                     <td className="px-4 py-3">
                       <form
                         action={updateBatchStatusAction}
-                        className="flex min-w-40 gap-2"
+                        className="grid min-w-48 gap-1"
                       >
                         <input type="hidden" name="id" value={batch.id} />
-                        <select
-                          name="status"
-                          defaultValue={batch.status}
-                          className="h-9 rounded-md border bg-background px-2 text-xs"
-                        >
-                          <option value="DRAFT">Draft</option>
-                          <option value="OPEN">Open</option>
-                          <option value="CLOSED">Closed</option>
-                          <option value="ORDERED">Ordered</option>
-                          <option value="COMPLETED">Completed</option>
-                        </select>
-                        <Button type="submit" variant="outline" size="sm">
-                          Update
-                        </Button>
+                        <div className="flex gap-2">
+                          <select
+                            name="status"
+                            defaultValue={batch.status}
+                            className="h-9 rounded-md border bg-background px-2 text-xs"
+                          >
+                            <option value="DRAFT">Draft</option>
+                            <option value="OPEN">Open</option>
+                            <option value="CLOSED">Closed</option>
+                            <option value="ORDERED">Ordered</option>
+                            <option value="COMPLETED">Completed</option>
+                          </select>
+                          <Button type="submit" variant="outline" size="sm">
+                            Update status
+                          </Button>
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          OPEN tampil untuk customer, CLOSED menutup order baru.
+                        </p>
                       </form>
                     </td>
                   </tr>

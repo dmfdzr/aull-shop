@@ -23,7 +23,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
       <div className="mx-auto grid w-full max-w-6xl gap-8 px-5 py-8 md:grid-cols-[0.9fr_1.1fr] md:px-8 md:py-12">
         <aside className="space-y-4">
           <Button asChild variant="ghost" className="px-0">
-            <Link href="/">Kembali ke katalog</Link>
+            <Link href="/">Lihat katalog dulu</Link>
           </Button>
           <div className="space-y-3">
             <p className="text-sm font-medium text-primary">Form pemesanan PO</p>
@@ -183,7 +183,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
           </div>
 
           <Button type="submit" size="lg" disabled={options.length === 0}>
-            Submit order PO
+            Kirim order PO
           </Button>
         </form>
       </div>

@@ -62,7 +62,7 @@ export default async function AdminLoginPage({
         </div>
 
         <Button type="submit" size="lg">
-          Masuk
+          Masuk dashboard admin
         </Button>
         <Button asChild variant="ghost">
           <Link href="/">Kembali ke katalog</Link>

@@ -72,7 +72,7 @@ export default async function AdminOrderDetailPage({
       <AppAlert status={flash.status} message={flash.message} />
       <div className="mb-4">
         <Button asChild variant="outline">
-          <Link href="/admin/orders">Kembali ke masterlist</Link>
+          <Link href="/admin/orders">Kembali ke masterlist order</Link>
         </Button>
       </div>
 
@@ -215,7 +215,7 @@ export default async function AdminOrderDetailPage({
                         placeholder="Alasan reject opsional"
                       />
                       <Button type="submit" size="sm">
-                        Simpan verifikasi
+                        Simpan hasil verifikasi
                       </Button>
                     </form>
                   ) : null}
@@ -274,7 +274,7 @@ export default async function AdminOrderDetailPage({
               className="rounded-md border bg-background px-3 py-2 text-sm"
               placeholder="Catatan shipment"
             />
-            <Button type="submit">Tambah event</Button>
+            <Button type="submit">Tambah update shipment</Button>
           </form>
 
           <div className="app-surface p-5">
@@ -324,7 +324,7 @@ export default async function AdminOrderDetailPage({
               placeholder="https://shopee.co.id/..."
               defaultValue={order.shopeeCheckout?.instructionUrl ?? ""}
             />
-            <Button type="submit">Simpan instruksi</Button>
+            <Button type="submit">Simpan instruksi Shopee</Button>
           </form>
         </aside>
       </div>

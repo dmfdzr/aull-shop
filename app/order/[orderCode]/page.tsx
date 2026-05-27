@@ -63,7 +63,7 @@ export default async function OrderStatusPage({
     <main className="min-h-svh">
       <div className="mx-auto w-full max-w-4xl space-y-6 px-5 py-8 md:px-8 md:py-12">
         <Button asChild variant="ghost" className="px-0">
-          <Link href="/">Kembali ke katalog</Link>
+          <Link href="/">Lihat katalog</Link>
         </Button>
         <AppAlert status={flash.status} message={flash.message} />
 
@@ -216,7 +216,7 @@ export default async function OrderStatusPage({
                   className="min-h-11 rounded-md border bg-background px-3 py-2 text-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/30"
                 />
               </label>
-              <Button type="submit">Submit checkout Shopee</Button>
+              <Button type="submit">Kirim bukti checkout Shopee</Button>
             </form>
           </section>
         ) : null}
@@ -249,7 +249,7 @@ export default async function OrderStatusPage({
                 className="min-h-11 rounded-md border bg-background px-3 py-2 text-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/30"
               />
             </label>
-            <Button type="submit">Submit pelunasan</Button>
+            <Button type="submit">Upload bukti pelunasan</Button>
           </form>
         </section>
       </div>
