@@ -22,7 +22,7 @@ export function AdminShell({ children, title, description }: AdminShellProps) {
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-5 py-4 md:flex-row md:items-center md:justify-between md:px-8">
           <div>
             <Link href="/admin" className="app-link-brand text-sm font-semibold">
-              Aull Shop Ops
+              SKZmart Ops
             </Link>
             <h1 className="mt-1 text-2xl font-semibold">{title}</h1>
             {description ? (

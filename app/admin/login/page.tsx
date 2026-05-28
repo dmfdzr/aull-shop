@@ -28,7 +28,7 @@ export default async function AdminLoginPage({
         />
         <div>
           <p className="text-sm font-medium text-primary">Admin area</p>
-          <h1 className="mt-1 text-2xl font-semibold">Login Aull Shop</h1>
+          <h1 className="mt-1 text-2xl font-semibold">Login SKZmart</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Masuk untuk mengelola PO batch, katalog, masterlist, pembayaran,
             dan shipment.

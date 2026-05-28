@@ -5,5 +5,5 @@ export function createOrderCode() {
     .replaceAll("-", "")
   const randomPart = crypto.randomUUID().slice(0, 8).toUpperCase()
 
-  return `AULL-${datePart}-${randomPart}`
+  return `SKZ-${datePart}-${randomPart}`
 }

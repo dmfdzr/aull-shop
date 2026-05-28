@@ -1,10 +1,10 @@
-# Aull Shop PO System
+# SKZmart PO System
 
-Commit message: `docs: document aull shop po system overview`
+Commit message: `docs: document skzmart po system overview`
 
-Aull Shop PO System adalah aplikasi web full-stack untuk operasional pre-order merch K-pop. Aplikasi ini akan memakai Next.js sebagai frontend dan backend, Prisma sebagai ORM, Supabase Postgres sebagai database, Supabase Auth untuk login admin, dan Supabase Storage untuk bukti pembayaran serta bukti checkout Shopee.
+SKZmart PO System adalah aplikasi web full-stack untuk operasional pre-order merch K-pop. Aplikasi ini akan memakai Next.js sebagai frontend dan backend, Prisma sebagai ORM, Supabase Postgres sebagai database, Supabase Auth untuk login admin, dan Supabase Storage untuk bukti pembayaran serta bukti checkout Shopee.
 
-Dokumen desain lengkap tersedia di [docs/superpowers/specs/2026-05-27-aull-shop-po-system-design.md](docs/superpowers/specs/2026-05-27-aull-shop-po-system-design.md).
+Dokumen desain lengkap tersedia di [docs/superpowers/specs/2026-05-27-skzmart-po-system-design.md](docs/superpowers/specs/2026-05-27-skzmart-po-system-design.md).
 
 ## Product Direction
 

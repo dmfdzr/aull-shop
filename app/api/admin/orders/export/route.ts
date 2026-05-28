@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
       headers: {
         "Content-Type":
           "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        "Content-Disposition": "attachment; filename=aull-shop-masterlist.xlsx",
+        "Content-Disposition": "attachment; filename=skzmart-masterlist.xlsx",
       },
     })
   }
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
   return new Response(csv, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
-      "Content-Disposition": "attachment; filename=aull-shop-masterlist.csv",
+      "Content-Disposition": "attachment; filename=skzmart-masterlist.csv",
     },
   })
 }

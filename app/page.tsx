@@ -15,16 +15,19 @@ export default async function Page() {
 
   return (
     <main className="min-h-svh">
-      <section className="border-b border-border/80 bg-[linear-gradient(135deg,color-mix(in_oklch,var(--card),transparent_4%),color-mix(in_oklch,var(--primary),var(--background)_72%))]">
+      <section className="brand-hero border-b border-border/80">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-5 py-10 md:px-8 md:py-14">
           <div className="max-w-3xl space-y-4">
-            <StatusBadge tone="blue">K-pop merch PO</StatusBadge>
+            <div className="flex flex-wrap gap-2">
+              <StatusBadge tone="blue">K-pop merch PO</StatusBadge>
+              <span className="brand-chip">friendly preorder space</span>
+            </div>
             <h1 className="text-4xl font-semibold tracking-normal text-foreground md:text-6xl">
-              Aull Shop pre-order hub
+              SKZmart pre-order hub
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
-              Pilih merch dari batch PO aktif, upload bukti DP, lalu pantau
-              perjalanan order sampai siap checkout Shopee.
+              Tempat pesan merch K-pop yang lebih rapi, cerah, dan gampang
+              dipantau dari DP sampai checkout Shopee.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -66,7 +69,7 @@ export default async function Page() {
             {batches.map((batch) => (
               <section
                 key={batch.id}
-                className="app-surface p-4"
+                className="app-surface brand-accent-card p-4"
               >
                 <div className="mb-4 flex flex-col justify-between gap-2 md:flex-row md:items-center">
                   <div>

@@ -51,9 +51,9 @@
 :root {
     --font-sans-family: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-mono-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-    --background: oklch(0.985 0.026 214);
+    --background: oklch(0.986 0.032 213);
     --foreground: oklch(0.245 0.052 229);
-    --card: oklch(1 0.006 210);
+    --card: oklch(1 0.012 205);
     --card-foreground: oklch(0.245 0.052 229);
     --popover: oklch(1 0.006 210);
     --popover-foreground: oklch(0.245 0.052 229);
@@ -63,17 +63,17 @@
     --secondary-foreground: oklch(0.31 0.071 226);
     --muted: oklch(0.955 0.023 220);
     --muted-foreground: oklch(0.48 0.055 229);
-    --accent: oklch(0.94 0.07 191);
-    --accent-foreground: oklch(0.29 0.076 219);
+    --accent: oklch(0.935 0.082 329);
+    --accent-foreground: oklch(0.33 0.087 320);
     --destructive: oklch(0.577 0.245 27.325);
     --border: oklch(0.89 0.034 215);
     --input: oklch(0.9 0.032 215);
     --ring: oklch(0.72 0.11 218);
     --chart-1: oklch(0.72 0.13 218);
-    --chart-2: oklch(0.78 0.13 190);
-    --chart-3: oklch(0.76 0.12 165);
-    --chart-4: oklch(0.84 0.14 88);
-    --chart-5: oklch(0.72 0.13 330);
+    --chart-2: oklch(0.8 0.115 190);
+    --chart-3: oklch(0.86 0.135 88);
+    --chart-4: oklch(0.78 0.13 329);
+    --chart-5: oklch(0.77 0.105 282);
     --radius: 0.875rem;
     --sidebar: oklch(0.98 0.024 214);
     --sidebar-foreground: oklch(0.245 0.052 229);
@@ -86,7 +86,7 @@
 }
 
 .dark {
-    --background: oklch(0.18 0.052 234);
+    --background: oklch(0.18 0.056 238);
     --foreground: oklch(0.94 0.028 216);
     --card: oklch(0.235 0.054 232);
     --card-foreground: oklch(0.94 0.028 216);
@@ -98,17 +98,17 @@
     --secondary-foreground: oklch(0.91 0.043 211);
     --muted: oklch(0.275 0.047 231);
     --muted-foreground: oklch(0.75 0.05 218);
-    --accent: oklch(0.34 0.078 194);
-    --accent-foreground: oklch(0.94 0.04 195);
+    --accent: oklch(0.42 0.097 325);
+    --accent-foreground: oklch(0.94 0.045 329);
     --destructive: oklch(0.72 0.18 24);
     --border: oklch(0.37 0.06 225);
     --input: oklch(0.32 0.052 229);
     --ring: oklch(0.72 0.11 205);
     --chart-1: oklch(0.74 0.12 207);
     --chart-2: oklch(0.74 0.13 188);
-    --chart-3: oklch(0.78 0.12 155);
-    --chart-4: oklch(0.82 0.12 86);
-    --chart-5: oklch(0.73 0.13 322);
+    --chart-3: oklch(0.82 0.12 89);
+    --chart-4: oklch(0.74 0.13 323);
+    --chart-5: oklch(0.74 0.1 282);
     --sidebar: oklch(0.22 0.052 232);
     --sidebar-foreground: oklch(0.94 0.028 216);
     --sidebar-primary: oklch(0.76 0.125 209);
@@ -127,7 +127,8 @@
     @apply bg-background text-foreground;
     background-image:
       radial-gradient(circle at 0% 0%, color-mix(in oklch, var(--primary), transparent 74%), transparent 34rem),
-      radial-gradient(circle at 100% 10%, color-mix(in oklch, var(--accent), transparent 82%), transparent 28rem),
+      radial-gradient(circle at 100% 8%, color-mix(in oklch, var(--accent), transparent 76%), transparent 30rem),
+      radial-gradient(circle at 18% 100%, color-mix(in oklch, var(--chart-3), transparent 86%), transparent 24rem),
       linear-gradient(180deg, color-mix(in oklch, var(--background), var(--card) 32%), var(--background));
     min-height: 100svh;
     }
@@ -139,6 +140,7 @@
 @layer components {
   .app-surface {
     @apply rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
+    box-shadow: 0 14px 40px color-mix(in oklch, var(--primary), transparent 91%);
   }
 
   .app-surface-soft {
@@ -159,5 +161,20 @@
 
   .app-link-brand {
     @apply text-primary;
+  }
+
+  .brand-hero {
+    background:
+      linear-gradient(135deg, color-mix(in oklch, var(--card), transparent 3%), color-mix(in oklch, var(--primary), var(--background) 73%)),
+      radial-gradient(circle at 80% 20%, color-mix(in oklch, var(--accent), transparent 55%), transparent 22rem);
+  }
+
+  .brand-chip {
+    @apply inline-flex items-center rounded-full border border-border bg-card/75 px-3 py-1 text-xs font-semibold text-muted-foreground shadow-sm backdrop-blur;
+  }
+
+  .brand-accent-card {
+    background:
+      linear-gradient(135deg, color-mix(in oklch, var(--card), transparent 4%), color-mix(in oklch, var(--accent), var(--card) 88%));
   }
 }

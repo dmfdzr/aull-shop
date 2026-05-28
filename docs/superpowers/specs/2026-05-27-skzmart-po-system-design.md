@@ -1,10 +1,10 @@
-# Aull Shop PO System Design
+# SKZmart PO System Design
 
 Commit message: `docs: define modular po system design`
 
 ## Summary
 
-Aull Shop needs a full-stack Next.js application for K-pop merchandise pre-orders. Version 1 will be a modular MVP with a public customer flow and an authenticated admin flow. Customers can order from active PO catalog batches without logging in, upload payment proof, track order status by order code, and submit Shopee checkout proof when the item is ready. Admins manage PO batches, catalog items, variants, masterlist operations, payment verification, shipment tracking, and CSV/XLSX exports.
+SKZmart needs a full-stack Next.js application for K-pop merchandise pre-orders. Version 1 will be a modular MVP with a public customer flow and an authenticated admin flow. Customers can order from active PO catalog batches without logging in, upload payment proof, track order status by order code, and submit Shopee checkout proof when the item is ready. Admins manage PO batches, catalog items, variants, masterlist operations, payment verification, shipment tracking, and CSV/XLSX exports.
 
 The app will use the existing Next.js, React, Tailwind CSS, and shadcn setup. The repository is currently TSX-based, and the project will continue with TSX for consistency with the scaffold and generated component system.
 
