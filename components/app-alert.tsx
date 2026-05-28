@@ -1,50 +1,86 @@
-import { StatusBadge } from "@/components/status-badge"
-import { cn } from "@/lib/utils"
+"use client"
 
-const alertStyles = {
-  success:
-    "border-cyan-200 bg-cyan-50 text-cyan-950 dark:border-cyan-800 dark:bg-cyan-950 dark:text-cyan-100",
-  error:
-    "border-rose-200 bg-rose-50 text-rose-950 dark:border-rose-800 dark:bg-rose-950 dark:text-rose-100",
-  info: "border-sky-200 bg-sky-50 text-sky-950 dark:border-sky-800 dark:bg-sky-950 dark:text-sky-100",
-} as const
-
-const badgeTone = {
-  success: "green",
-  error: "red",
-  info: "blue",
-} as const
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
 
 type AppAlertProps = {
   status?: string
   message?: string
-  className?: string
 }
 
-export function AppAlert({ status, message, className }: AppAlertProps) {
-  if (!message || !status || !(status in alertStyles)) {
+const modalCopy = {
+  success: {
+    title: "Berhasil disimpan",
+    action: "Lanjut",
+    marker: "✓",
+  },
+  error: {
+    title: "Aksi belum berhasil",
+    action: "Coba lagi",
+    marker: "!",
+  },
+  info: {
+    title: "Info",
+    action: "Mengerti",
+    marker: "i",
+  },
+} as const
+
+export function AppAlert({ status, message }: AppAlertProps) {
+  const router = useRouter()
+
+  if (!message || !status || !(status in modalCopy)) {
     return null
   }
 
-  const safeStatus = status as keyof typeof alertStyles
+  const safeStatus = status as keyof typeof modalCopy
+  const copy = modalCopy[safeStatus]
+
+  function closeModal() {
+    const nextUrl = new URL(window.location.href)
+    nextUrl.searchParams.delete("status")
+    nextUrl.searchParams.delete("message")
+    router.replace(`${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`, {
+      scroll: false,
+    })
+  }
 
   return (
     <div
-      role={safeStatus === "error" ? "alert" : "status"}
-      className={cn(
-        "mb-5 flex flex-col gap-3 rounded-xl border px-4 py-3 text-sm shadow-sm md:flex-row md:items-center md:justify-between",
-        alertStyles[safeStatus],
-        className
-      )}
+      role="presentation"
+      className="fixed inset-0 z-50 grid place-items-center bg-background/55 px-5 py-8 backdrop-blur-sm"
     >
-      <p className="leading-6">{message}</p>
-      <StatusBadge tone={badgeTone[safeStatus]}>
-        {safeStatus === "success"
-          ? "Berhasil"
-          : safeStatus === "error"
-            ? "Gagal"
-            : "Info"}
-      </StatusBadge>
+      <div
+        role={safeStatus === "error" ? "alertdialog" : "dialog"}
+        aria-modal="true"
+        aria-labelledby="feedback-title"
+        aria-describedby="feedback-message"
+        className="app-surface w-full max-w-md p-5 text-center shadow-xl"
+      >
+        <div
+          className={
+            safeStatus === "error"
+              ? "mx-auto mb-4 grid size-12 place-items-center rounded-full bg-rose-500/15 text-lg font-bold text-rose-600 dark:text-rose-300"
+              : "mx-auto mb-4 grid size-12 place-items-center rounded-full bg-primary/15 text-lg font-bold text-primary"
+          }
+        >
+          {copy.marker}
+        </div>
+        <h2 id="feedback-title" className="text-xl font-semibold">
+          {copy.title}
+        </h2>
+        <p
+          id="feedback-message"
+          className="mt-2 text-sm leading-6 text-muted-foreground"
+        >
+          {message}
+        </p>
+        <div className="mt-5 flex justify-center">
+          <Button type="button" onClick={closeModal}>
+            {copy.action}
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }

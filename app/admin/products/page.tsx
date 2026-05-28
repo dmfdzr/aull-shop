@@ -130,8 +130,8 @@ export default async function AdminProductsPage({
       <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {products.length === 0 ? (
           <div className="app-surface-soft border-dashed p-8 text-sm text-muted-foreground">
-            Belum ada produk. Setelah form CRUD dibuat, admin bisa menambahkan
-            item merch, varian, harga estimasi, dan minimum DP di sini.
+            Belum ada produk di katalog. Tambahkan item merch pertama agar
+            customer bisa mulai order dari batch PO aktif.
           </div>
         ) : (
           products.map((product) => (

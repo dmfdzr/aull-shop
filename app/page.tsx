@@ -61,8 +61,8 @@ export default async function Page() {
 
         {batches.length === 0 ? (
           <div className="app-surface-soft border-dashed p-8 text-sm text-muted-foreground">
-            Belum ada batch PO aktif. Jika database belum dikonfigurasi, halaman
-            ini akan menampilkan data setelah Supabase dan Prisma siap.
+            Belum ada PO aktif saat ini. Cek kembali nanti untuk batch merch
+            terbaru dari SKZmart.
           </div>
         ) : (
           <div className="grid gap-5">

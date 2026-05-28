@@ -73,7 +73,7 @@ export default async function AdminDashboardPage({
               {recentOrders.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-4 py-8 text-muted-foreground">
-                    Belum ada order atau database belum dikonfigurasi.
+                    Belum ada order masuk.
                   </td>
                 </tr>
               ) : (

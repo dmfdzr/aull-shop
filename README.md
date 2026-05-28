@@ -89,7 +89,7 @@ Install dependencies:
 npm install
 ```
 
-Run development server:
+Run local server:
 
 ```bash
 npm run dev
@@ -109,7 +109,7 @@ npm run lint
 
 ## Environment Variables
 
-Prisma dan Supabase akan membutuhkan environment variables saat implementasi database dimulai:
+Prisma dan Supabase membutuhkan environment variables berikut:
 
 ```env
 DATABASE_URL=

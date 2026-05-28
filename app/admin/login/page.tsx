@@ -24,7 +24,6 @@ export default async function AdminLoginPage({
         <AppAlert
           status={flash.status}
           message={flash.message}
-          className="mb-0"
         />
         <div>
           <p className="text-sm font-medium text-primary">Admin area</p>

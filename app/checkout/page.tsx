@@ -46,7 +46,6 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
           <AppAlert
             status={flash.status}
             message={flash.message}
-            className="mb-0"
           />
           <SectionHeader
             eyebrow="Customer order"
