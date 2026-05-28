@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { LogoutConfirmation } from "@/components/logout-confirmation"
 import { Button } from "@/components/ui/button"
 import { signOutAdminAction } from "@/app/admin/actions"
 
@@ -35,11 +36,7 @@ export function AdminShell({ children, title, description }: AdminShellProps) {
                 <Link href={item.href}>{item.label}</Link>
               </Button>
             ))}
-            <form action={signOutAdminAction}>
-              <Button type="submit" variant="ghost" size="sm">
-                Logout
-              </Button>
-            </form>
+            <LogoutConfirmation action={signOutAdminAction} />
           </nav>
         </div>
       </header>
