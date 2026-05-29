@@ -1,5 +1,14 @@
 import "./globals.css"
+import type { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
+
+export const metadata: Metadata = {
+  title: {
+    default: "SKZ Mart",
+    template: "%s | SKZ Mart",
+  },
+  description: "SKZ Mart preorder hub.",
+}
 
 export default function RootLayout({
   children,
