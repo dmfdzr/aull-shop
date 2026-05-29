@@ -51,30 +51,30 @@
 :root {
     --font-sans-family: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-mono-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
-    --background: oklch(0.986 0.032 213);
-    --foreground: oklch(0.245 0.052 229);
-    --card: oklch(1 0.012 205);
-    --card-foreground: oklch(0.245 0.052 229);
+    --background: oklch(0.982 0.026 224);
+    --foreground: oklch(0.205 0.055 238);
+    --card: oklch(0.998 0.01 205);
+    --card-foreground: oklch(0.205 0.055 238);
     --popover: oklch(1 0.006 210);
     --popover-foreground: oklch(0.245 0.052 229);
-    --primary: oklch(0.67 0.143 222);
+    --primary: oklch(0.61 0.176 243);
     --primary-foreground: oklch(0.99 0.014 205);
-    --secondary: oklch(0.94 0.045 212);
+    --secondary: oklch(0.94 0.044 232);
     --secondary-foreground: oklch(0.31 0.071 226);
     --muted: oklch(0.955 0.023 220);
     --muted-foreground: oklch(0.48 0.055 229);
-    --accent: oklch(0.935 0.082 329);
-    --accent-foreground: oklch(0.33 0.087 320);
+    --accent: oklch(0.9 0.114 336);
+    --accent-foreground: oklch(0.29 0.09 333);
     --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.89 0.034 215);
+    --border: oklch(0.875 0.036 226);
     --input: oklch(0.9 0.032 215);
     --ring: oklch(0.72 0.11 218);
-    --chart-1: oklch(0.72 0.13 218);
-    --chart-2: oklch(0.8 0.115 190);
-    --chart-3: oklch(0.86 0.135 88);
-    --chart-4: oklch(0.78 0.13 329);
-    --chart-5: oklch(0.77 0.105 282);
-    --radius: 0.875rem;
+    --chart-1: oklch(0.66 0.16 244);
+    --chart-2: oklch(0.75 0.14 184);
+    --chart-3: oklch(0.84 0.16 86);
+    --chart-4: oklch(0.73 0.16 334);
+    --chart-5: oklch(0.71 0.13 285);
+    --radius: 0.75rem;
     --sidebar: oklch(0.98 0.024 214);
     --sidebar-foreground: oklch(0.245 0.052 229);
     --sidebar-primary: oklch(0.67 0.143 222);
@@ -126,10 +126,10 @@
   body {
     @apply bg-background text-foreground;
     background-image:
-      radial-gradient(circle at 0% 0%, color-mix(in oklch, var(--primary), transparent 74%), transparent 34rem),
-      radial-gradient(circle at 100% 8%, color-mix(in oklch, var(--accent), transparent 76%), transparent 30rem),
-      radial-gradient(circle at 18% 100%, color-mix(in oklch, var(--chart-3), transparent 86%), transparent 24rem),
-      linear-gradient(180deg, color-mix(in oklch, var(--background), var(--card) 32%), var(--background));
+      radial-gradient(circle at 8% -8%, color-mix(in oklch, var(--primary), transparent 74%), transparent 32rem),
+      radial-gradient(circle at 100% 4%, color-mix(in oklch, var(--accent), transparent 72%), transparent 30rem),
+      radial-gradient(circle at 18% 100%, color-mix(in oklch, var(--chart-3), transparent 85%), transparent 24rem),
+      linear-gradient(180deg, color-mix(in oklch, var(--background), var(--card) 34%), var(--background));
     min-height: 100svh;
     }
   html {
@@ -139,24 +139,63 @@
 
 @layer components {
   .app-surface {
-    @apply rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
-    box-shadow: 0 14px 40px color-mix(in oklch, var(--primary), transparent 91%);
+    @apply rounded-2xl border border-border/75 bg-card/88 shadow-sm backdrop-blur-xl;
+    box-shadow: 0 18px 50px color-mix(in oklch, var(--primary), transparent 90%);
   }
 
   .app-surface-soft {
-    @apply rounded-2xl border border-border/70 bg-muted/55 shadow-sm backdrop-blur;
+    @apply rounded-2xl border border-border/65 bg-muted/55 shadow-sm backdrop-blur-xl;
   }
 
   .app-table {
     @apply overflow-hidden rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
+    box-shadow: 0 16px 42px color-mix(in oklch, var(--primary), transparent 92%);
+  }
+
+  .app-table table {
+    @apply border-separate border-spacing-0;
+  }
+
+  .app-table thead {
+    @apply bg-secondary/70;
+  }
+
+  .app-table thead th {
+    @apply whitespace-nowrap border-b border-border/80 px-5 py-4 text-xs font-bold uppercase text-muted-foreground;
+  }
+
+  .app-table tbody td {
+    @apply border-b border-border/55 px-5 py-4 align-top leading-6;
+  }
+
+  .app-table tbody tr {
+    @apply transition-colors duration-200;
+  }
+
+  .app-table tbody tr:hover {
+    @apply bg-secondary/35;
+  }
+
+  .app-table tbody tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .app-table tbody td:first-child,
+  .app-table thead th:first-child {
+    @apply pl-6;
+  }
+
+  .app-table tbody td:last-child,
+  .app-table thead th:last-child {
+    @apply pr-6;
   }
 
   .app-header {
-    @apply border-b border-border/80 bg-card/85 shadow-sm backdrop-blur;
+    @apply border-b border-border/70 bg-card/82 shadow-sm backdrop-blur-xl;
   }
 
   .app-field {
-    @apply border-input bg-background/70 text-foreground placeholder:text-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/30;
+    @apply min-h-11 rounded-xl border border-input bg-background/72 px-3.5 text-sm text-foreground shadow-sm outline-none transition-all duration-200 placeholder:text-muted-foreground hover:border-primary/35 focus-visible:border-primary/55 focus-visible:bg-card focus-visible:ring-3 focus-visible:ring-ring/25;
   }
 
   .app-link-brand {
@@ -165,8 +204,9 @@
 
   .brand-hero {
     background:
-      linear-gradient(135deg, color-mix(in oklch, var(--card), transparent 3%), color-mix(in oklch, var(--primary), var(--background) 73%)),
-      radial-gradient(circle at 80% 20%, color-mix(in oklch, var(--accent), transparent 55%), transparent 22rem);
+      linear-gradient(135deg, color-mix(in oklch, var(--card), transparent 2%), color-mix(in oklch, var(--primary), var(--background) 78%)),
+      radial-gradient(circle at 80% 14%, color-mix(in oklch, var(--accent), transparent 48%), transparent 22rem),
+      radial-gradient(circle at 52% 76%, color-mix(in oklch, var(--chart-2), transparent 68%), transparent 24rem);
   }
 
   .brand-chip {
@@ -177,4 +217,32 @@
     background:
       linear-gradient(135deg, color-mix(in oklch, var(--card), transparent 4%), color-mix(in oklch, var(--accent), var(--card) 88%));
   }
+
+  .app-shell-grid {
+    background-image:
+      linear-gradient(color-mix(in oklch, var(--border), transparent 62%) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklch, var(--border), transparent 62%) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: linear-gradient(180deg, black 0%, transparent 82%);
+  }
+
+  .app-panel-highlight {
+    background:
+      linear-gradient(140deg, color-mix(in oklch, var(--card), transparent 2%), color-mix(in oklch, var(--primary), var(--card) 90%)),
+      radial-gradient(circle at 88% 12%, color-mix(in oklch, var(--accent), transparent 48%), transparent 18rem);
+  }
+
+  .app-chip {
+    @apply inline-flex min-h-8 items-center rounded-full border border-border/75 bg-card/75 px-3 text-xs font-semibold text-muted-foreground shadow-sm backdrop-blur;
+  }
+
+  .app-stat-card {
+    @apply rounded-2xl border border-border/70 bg-card/86 p-4 shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/35;
+    box-shadow: 0 16px 44px color-mix(in oklch, var(--primary), transparent 92%);
+  }
+
+  .app-form-section {
+    @apply rounded-2xl border border-border/70 bg-card/72 p-4 shadow-sm;
+  }
+
 }

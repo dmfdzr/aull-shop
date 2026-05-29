@@ -27,18 +27,18 @@ export default async function AdminOrdersPage({
   return (
     <AdminShell
       title="Masterlist"
-      description="Daftar order PO dengan status pembayaran dan shipment terpisah."
+      description="Daftar order PO dengan status pembayaran dan pengiriman terpisah."
     >
       <AppAlert status={flash.status} message={flash.message} />
       <ActionToolbar
-        title="Export laporan"
-        description="Download masterlist untuk rekap owner atau pengecekan operasional."
+        title="Unduh laporan"
+        description="Ambil daftar order untuk rekap owner atau pengecekan operasional."
       >
         <Button asChild variant="outline">
-          <Link href="/api/admin/orders/export?format=csv">Download CSV</Link>
+          <Link href="/api/admin/orders/export?format=csv">Unduh CSV</Link>
         </Button>
         <Button asChild variant="outline">
-          <Link href="/api/admin/orders/export?format=xlsx">Download XLSX</Link>
+          <Link href="/api/admin/orders/export?format=xlsx">Unduh XLSX</Link>
         </Button>
       </ActionToolbar>
 
@@ -46,7 +46,7 @@ export default async function AdminOrdersPage({
         <div className="border-b p-4">
           <SectionHeader
             title="Order masuk"
-            description="Pantau customer, batch, nilai order, pembayaran, dan posisi shipment."
+            description="Pantau pemesan, batch, nilai order, pembayaran, dan posisi pengiriman."
             className="mb-0"
           />
         </div>
@@ -55,12 +55,12 @@ export default async function AdminOrdersPage({
             <thead className="border-b bg-muted/50 text-muted-foreground">
               <tr>
                 <th className="px-4 py-3 font-medium">Order</th>
-                <th className="px-4 py-3 font-medium">Customer</th>
+                <th className="px-4 py-3 font-medium">Pemesan</th>
                 <th className="px-4 py-3 font-medium">Batch</th>
-                <th className="px-4 py-3 font-medium">Item</th>
+                <th className="px-4 py-3 font-medium">Barang</th>
                 <th className="px-4 py-3 font-medium">Total</th>
-                <th className="px-4 py-3 font-medium">Payment</th>
-                <th className="px-4 py-3 font-medium">Shipment</th>
+                <th className="px-4 py-3 font-medium">Pembayaran</th>
+                <th className="px-4 py-3 font-medium">Pengiriman</th>
                 <th className="px-4 py-3 font-medium">Detail</th>
               </tr>
             </thead>

@@ -34,7 +34,7 @@ export async function submitFinalPaymentAction(formData: FormData) {
     redirectWithFlash(
       `/order/${parsed.data.orderCode}`,
       "error",
-      "Bukti pelunasan wajib diupload."
+      "Bukti pelunasan wajib dikirim."
     )
   }
 
@@ -67,7 +67,7 @@ export async function submitFinalPaymentAction(formData: FormData) {
     redirectWithFlash(
       `/order/${order.orderCode}`,
       "error",
-      "Upload bukti pelunasan gagal."
+      "Bukti pelunasan gagal dikirim."
     )
   }
 
@@ -168,7 +168,7 @@ export async function submitShopeeCheckoutProofAction(formData: FormData) {
       redirectWithFlash(
         `/order/${order.orderCode}`,
         "error",
-        "Upload bukti checkout Shopee gagal."
+        "Bukti checkout Shopee gagal dikirim."
       )
     }
   }

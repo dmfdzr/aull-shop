@@ -4,6 +4,13 @@ import { AppAlert } from "@/components/app-alert"
 import { BackLinkButton, SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { requireAdminUser } from "@/lib/auth"
 import { isDatabaseConfigured } from "@/lib/env"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
@@ -67,7 +74,7 @@ export default async function AdminOrderDetailPage({
   return (
     <AdminShell
       title={order.orderCode}
-      description="Detail order, pembayaran, shipment timeline, dan Shopee checkout."
+      description="Detail order, pembayaran, riwayat pengiriman, dan checkout Shopee."
     >
       <AppAlert status={flash.status} message={flash.message} />
       <div className="mb-4">
@@ -89,7 +96,7 @@ export default async function AdminOrderDetailPage({
             </div>
             <dl className="grid gap-4 text-sm md:grid-cols-2">
               <div>
-                <dt className="text-muted-foreground">Customer</dt>
+                <dt className="text-muted-foreground">Pemesan</dt>
                 <dd className="font-medium">{order.customer.name}</dd>
               </div>
               <div>
@@ -112,7 +119,7 @@ export default async function AdminOrderDetailPage({
           <div className="app-surface p-5">
             <SectionHeader
               title="Item order"
-              description="Snapshot item saat customer membuat order."
+              description="Barang yang dipilih pemesan saat membuat order."
             />
             <div className="space-y-3">
               {order.items.map((item) => (
@@ -136,12 +143,12 @@ export default async function AdminOrderDetailPage({
 
           <div className="app-surface p-5">
             <SectionHeader
-              title="Timeline shipment"
+              title="Riwayat pengiriman"
               description="Riwayat pergerakan barang untuk order ini."
             />
             {order.shipmentEvents.length === 0 ? (
               <p className="text-sm text-muted-foreground">
-                Belum ada shipment event.
+                Belum ada kabar pengiriman.
               </p>
             ) : (
               <div className="space-y-3">
@@ -209,14 +216,18 @@ export default async function AdminOrderDetailPage({
                         >
                           Verifikasi
                         </label>
-                        <select
-                          id={`status-${payment.id}`}
-                          name="status"
-                          className="h-9 rounded-md border bg-background px-2 text-sm"
-                        >
-                          <option value="VERIFIED">Verified</option>
-                          <option value="REJECTED">Reject</option>
-                        </select>
+                        <Select name="status" defaultValue="VERIFIED">
+                          <SelectTrigger
+                            id={`status-${payment.id}`}
+                            className="min-h-9"
+                          >
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="VERIFIED">Terima</SelectItem>
+                            <SelectItem value="REJECTED">Tolak</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </div>
                       <input
                         name="rejectionReason"
@@ -238,38 +249,44 @@ export default async function AdminOrderDetailPage({
             className="app-surface grid gap-3 p-5"
           >
             <SectionHeader
-              title="Tambah update shipment"
-              description="Pilih stage terbaru agar customer bisa memantau progress."
+              title="Tambah kabar pengiriman"
+              description="Pilih posisi terbaru agar pemesan bisa memantau progres."
               className="mb-1"
             />
             <input type="hidden" name="orderId" value={order.id} />
             <label className="grid gap-2 text-sm font-medium">
               Stage
-              <select
-                name="stage"
-                className="h-10 rounded-md border bg-background px-2 text-sm"
-              >
-                <option value="ORDERED_TO_SOURCE">Order ke website</option>
-                <option value="TO_OVERSEAS_WAREHOUSE">
-                  Menuju warehouse luar
-                </option>
-                <option value="AT_OVERSEAS_WAREHOUSE">
-                  Di warehouse luar
-                </option>
-                <option value="TO_INDONESIA_WAREHOUSE">
-                  Menuju warehouse Indo
-                </option>
-                <option value="AT_INDONESIA_WAREHOUSE">
-                  Di warehouse Indo
-                </option>
-                <option value="TO_JOGJA">Menuju Jogja</option>
-                <option value="AT_JOGJA">Di Jogja</option>
-                <option value="SHOPEE_CHECKOUT_PENDING">
+              <Select name="stage" defaultValue="ORDERED_TO_SOURCE">
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ORDERED_TO_SOURCE">
+                    Order ke website
+                  </SelectItem>
+                  <SelectItem value="TO_OVERSEAS_WAREHOUSE">
+                    Menuju gudang luar negeri
+                  </SelectItem>
+                  <SelectItem value="AT_OVERSEAS_WAREHOUSE">
+                    Di gudang luar negeri
+                  </SelectItem>
+                  <SelectItem value="TO_INDONESIA_WAREHOUSE">
+                    Menuju gudang Indonesia
+                  </SelectItem>
+                  <SelectItem value="AT_INDONESIA_WAREHOUSE">
+                    Di gudang Indonesia
+                  </SelectItem>
+                  <SelectItem value="TO_JOGJA">Menuju Jogja</SelectItem>
+                  <SelectItem value="AT_JOGJA">Di Jogja</SelectItem>
+                  <SelectItem value="SHOPEE_CHECKOUT_PENDING">
                   Checkout Shopee
-                </option>
-                <option value="FINAL_DELIVERY">Pengiriman final</option>
-                <option value="DELIVERED">Selesai</option>
-              </select>
+                  </SelectItem>
+                  <SelectItem value="FINAL_DELIVERY">
+                    Pengiriman final
+                  </SelectItem>
+                  <SelectItem value="DELIVERED">Selesai</SelectItem>
+                </SelectContent>
+              </Select>
             </label>
             <input
               name="location"
@@ -285,15 +302,15 @@ export default async function AdminOrderDetailPage({
               name="notes"
               rows={3}
               className="rounded-md border bg-background px-3 py-2 text-sm"
-              placeholder="Catatan shipment"
+              placeholder="Catatan pengiriman"
             />
-            <Button type="submit">Tambah update shipment</Button>
+            <Button type="submit">Tambah kabar pengiriman</Button>
           </form>
 
           <div className="app-surface p-5">
             <SectionHeader
               title="Status checkout Shopee"
-              description="Informasi checkout yang terlihat dari sisi customer."
+              description="Informasi checkout yang terlihat oleh pemesan."
             />
             {order.shopeeCheckout ? (
               <div className="space-y-3 text-sm">
@@ -326,7 +343,7 @@ export default async function AdminOrderDetailPage({
           >
             <SectionHeader
               title="Instruksi Shopee"
-              description="Isi instruksi dan link yang harus diikuti customer."
+              description="Isi arahan dan link yang harus diikuti pemesan."
               className="mb-1"
             />
             <input type="hidden" name="orderId" value={order.id} />
@@ -335,7 +352,7 @@ export default async function AdminOrderDetailPage({
               name="instructionText"
               rows={3}
               className="rounded-md border bg-background px-3 py-2 text-sm"
-              placeholder="Instruksi checkout untuk customer"
+              placeholder="Arahan checkout untuk pemesan"
               defaultValue={order.shopeeCheckout?.instructionText ?? ""}
             />
             <input

@@ -15,7 +15,7 @@ const createProductSchema = z.object({
   sourceUrl: z.string().url("URL produk tidak valid.").optional().or(z.literal("")),
   estimatedPrice: z.coerce.number().positive("Harga estimasi wajib diisi."),
   minimumDp: z.coerce.number().positive("Minimum DP wajib diisi."),
-  variants: z.string().min(1, "Minimal satu varian wajib diisi."),
+  variants: z.string().min(1, "Minimal satu pilihan produk wajib diisi."),
 })
 
 function parseVariantLines(value: string) {
@@ -61,11 +61,11 @@ export async function createProductAction(formData: FormData) {
   const variants = parseVariantLines(parsed.data.variants)
 
   if (variants.length === 0) {
-    redirectWithFlash("/admin/products", "error", "Minimal satu varian wajib diisi.")
+    redirectWithFlash("/admin/products", "error", "Minimal satu pilihan produk wajib diisi.")
   }
 
   if (variants.some((variant) => variant.quota !== null && Number.isNaN(variant.quota))) {
-    redirectWithFlash("/admin/products", "error", "Format kuota varian tidak valid.")
+    redirectWithFlash("/admin/products", "error", "Format kuota pilihan produk tidak valid.")
   }
 
   try {
@@ -121,11 +121,11 @@ export async function toggleProductAction(formData: FormData) {
       },
     })
   } catch {
-    redirectWithFlash("/admin/products", "error", "Status produk gagal diupdate.")
+    redirectWithFlash("/admin/products", "error", "Status produk gagal diperbarui.")
   }
 
   revalidatePath("/admin/products")
   revalidatePath("/")
   revalidatePath("/checkout")
-  redirectWithFlash("/admin/products", "success", "Status produk berhasil diupdate.")
+  redirectWithFlash("/admin/products", "success", "Status produk berhasil diperbarui.")
 }

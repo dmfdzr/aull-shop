@@ -19,16 +19,11 @@ export function BackLinkButton({
       variant="ghost"
       size="sm"
       className={cn(
-        "-ml-2 h-9 gap-2 rounded-full px-3 text-muted-foreground hover:bg-secondary hover:text-foreground",
+        "-ml-2 h-9 rounded-full px-3 text-muted-foreground hover:bg-secondary hover:text-foreground",
         className
       )}
     >
-      <Link href={href}>
-        <span aria-hidden="true" className="text-base leading-none">
-          ←
-        </span>
-        <span>{children}</span>
-      </Link>
+      <Link href={href}>{children}</Link>
     </Button>
   )
 }
@@ -57,7 +52,7 @@ export function SectionHeader({
     >
       <div className="min-w-0">
         {eyebrow ? (
-          <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-primary">
+          <p className="mb-1 text-xs font-semibold uppercase text-primary">
             {eyebrow}
           </p>
         ) : null}
@@ -87,7 +82,7 @@ export function ActionToolbar({
   children,
 }: ActionToolbarProps) {
   return (
-    <section className="app-surface mb-5 flex flex-col justify-between gap-4 p-4 md:flex-row md:items-center">
+    <section className="app-surface mb-6 flex flex-col justify-between gap-4 p-4 md:flex-row md:items-center md:p-5">
       <div>
         <h2 className="font-semibold">{title}</h2>
         {description ? (

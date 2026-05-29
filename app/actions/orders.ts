@@ -13,7 +13,7 @@ const createOrderSchema = z.object({
   whatsapp: z.string().min(8, "Nomor WhatsApp tidak valid."),
   email: z.string().email("Email tidak valid.").optional().or(z.literal("")),
   address: z.string().optional(),
-  variantId: z.string().uuid("Varian tidak valid."),
+  variantId: z.string().uuid("Pilihan produk tidak valid."),
   quantity: z.coerce.number().int().min(1).max(99),
   dpAmount: z.coerce.number().positive("Nominal DP wajib diisi."),
   notes: z.string().optional(),
@@ -43,7 +43,7 @@ export async function createOrderAction(formData: FormData) {
   }
 
   if (!(proofFile instanceof File)) {
-    redirectWithFlash("/checkout", "error", "Bukti pembayaran wajib diupload.")
+    redirectWithFlash("/checkout", "error", "Bukti pembayaran wajib dikirim.")
   }
 
   const proofError = validateProofFile(proofFile)
@@ -67,7 +67,7 @@ export async function createOrderAction(formData: FormData) {
   })
 
   if (!variant || !variant.product.isActive) {
-    redirectWithFlash("/checkout", "error", "Produk atau varian tidak tersedia.")
+    redirectWithFlash("/checkout", "error", "Produk atau pilihan tidak tersedia.")
   }
 
   if (variant.product.batch.status !== "OPEN") {
@@ -75,7 +75,7 @@ export async function createOrderAction(formData: FormData) {
   }
 
   if (variant.quota !== null && parsed.data.quantity > variant.quota) {
-    redirectWithFlash("/checkout", "error", "Jumlah order melebihi kuota varian.")
+    redirectWithFlash("/checkout", "error", "Jumlah order melebihi kuota pilihan.")
   }
 
   const orderCode = createOrderCode()
@@ -97,7 +97,7 @@ export async function createOrderAction(formData: FormData) {
     redirectWithFlash(
       "/checkout",
       "error",
-      "Upload bukti pembayaran gagal. Coba lagi."
+      "Bukti pembayaran gagal dikirim. Coba lagi."
     )
   }
 

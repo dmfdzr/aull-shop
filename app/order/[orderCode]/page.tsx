@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { AppAlert } from "@/components/app-alert"
 import { BackLinkButton, SectionHeader } from "@/components/page-chrome"
+import { ProofFileInput } from "@/components/proof-file-input"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
 import { formatCurrency, paymentStatusLabel, shipmentStatusLabel } from "@/lib/format"
@@ -69,7 +70,7 @@ export default async function OrderStatusPage({
         <section className="app-surface p-5">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
-              <p className="text-sm text-muted-foreground">Order code</p>
+              <p className="text-sm text-muted-foreground">Kode order</p>
               <h1 className="text-3xl font-semibold">{order.orderCode}</h1>
               <p className="mt-2 text-sm text-muted-foreground">
                 Pemesan: {order.customer.name}
@@ -90,7 +91,7 @@ export default async function OrderStatusPage({
           <div className="app-surface p-5">
             <SectionHeader
               title="Item order"
-              description="Ringkasan item dan varian yang kamu pesan."
+              description="Ringkasan barang dan pilihan yang kamu pesan."
             />
             <div className="space-y-3">
               {order.items.map((item) => (
@@ -159,11 +160,12 @@ export default async function OrderStatusPage({
         <section className="app-surface p-5">
           <SectionHeader
             title="Timeline pengiriman"
-            description="Update posisi barang dari admin akan muncul di sini."
+            description="Kabar posisi barang dari admin akan muncul di sini."
           />
           {order.shipmentEvents.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              Shipment belum dimulai. Status akan muncul setelah admin update.
+              Pengiriman belum dimulai. Status akan muncul setelah admin memberi
+              kabar terbaru.
             </p>
           ) : (
             <div className="space-y-3">
@@ -191,7 +193,7 @@ export default async function OrderStatusPage({
           <section className="app-surface p-5">
             <SectionHeader
               title="Checkout Shopee"
-              description="Kirim link invoice atau bukti checkout setelah mengikuti instruksi admin."
+              description="Kirim link pesanan atau bukti checkout setelah mengikuti arahan admin."
             />
             <p className="text-sm text-muted-foreground">
               {order.shopeeCheckout.instructionText ??
@@ -210,7 +212,7 @@ export default async function OrderStatusPage({
             >
               <input type="hidden" name="orderCode" value={order.orderCode} />
               <label className="grid gap-2 text-sm font-medium">
-                Link invoice Shopee
+                Link pesanan Shopee
                 <input
                   name="customerInvoiceUrl"
                   type="url"
@@ -220,11 +222,8 @@ export default async function OrderStatusPage({
               </label>
               <label className="grid gap-2 text-sm font-medium">
                 Bukti checkout opsional
-                <input
+                <ProofFileInput
                   name="proofFile"
-                  type="file"
-                  accept="image/jpeg,image/png,image/webp,application/pdf"
-                  className="min-h-11 rounded-md border bg-background px-3 py-2 text-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/30"
                 />
               </label>
               <Button type="submit">Kirim bukti checkout Shopee</Button>
@@ -234,7 +233,7 @@ export default async function OrderStatusPage({
 
         <section className="app-surface p-5">
           <SectionHeader
-            title="Upload pelunasan"
+            title="Kirim bukti pelunasan"
             description="Gunakan form ini setelah admin menginfokan nominal final."
           />
           <form action={submitFinalPaymentAction} className="grid gap-3">
@@ -252,15 +251,12 @@ export default async function OrderStatusPage({
             </label>
             <label className="grid gap-2 text-sm font-medium">
               Bukti pelunasan
-              <input
+              <ProofFileInput
                 required
                 name="proofFile"
-                type="file"
-                accept="image/jpeg,image/png,image/webp,application/pdf"
-                className="min-h-11 rounded-md border bg-background px-3 py-2 text-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-primary-foreground focus-visible:ring-3 focus-visible:ring-ring/30"
               />
             </label>
-            <Button type="submit">Upload bukti pelunasan</Button>
+            <Button type="submit">Kirim bukti pelunasan</Button>
           </form>
         </section>
       </div>

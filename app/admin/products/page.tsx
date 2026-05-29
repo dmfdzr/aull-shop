@@ -3,6 +3,13 @@ import { AppAlert } from "@/components/app-alert"
 import { SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { getBatches, getProducts } from "@/lib/admin-data"
 import { requireAdminUser } from "@/lib/auth"
 import { formatCurrency } from "@/lib/format"
@@ -27,30 +34,30 @@ export default async function AdminProductsPage({
   return (
     <AdminShell
       title="Katalog"
-      description="Produk dan varian PO yang tampil untuk customer."
+      description="Produk dan pilihan PO yang tampil untuk pemesan."
     >
       <AppAlert status={flash.status} message={flash.message} />
       <section className="app-surface mb-6 p-5">
         <SectionHeader
           eyebrow="Katalog PO"
           title="Tambah produk"
-          description="Varian ditulis satu per baris. Format opsional: Nama varian | SKU | Kuota."
+          description="Pilihan produk ditulis satu per baris. Format opsional: Nama pilihan | Kode | Kuota."
         />
         <form action={createProductAction} className="grid gap-4 lg:grid-cols-6">
           <label className="grid gap-2 text-sm font-medium lg:col-span-2">
             Batch
-            <select
-              required
-              name="batchId"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-            >
-              <option value="">Pilih batch</option>
+            <Select name="batchId" required>
+              <SelectTrigger>
+                <SelectValue placeholder="Pilih batch" />
+              </SelectTrigger>
+              <SelectContent>
               {batches.map((batch) => (
-                <option key={batch.id} value={batch.id}>
+                <SelectItem key={batch.id} value={batch.id}>
                   {batch.name} ({batch.status})
-                </option>
+                </SelectItem>
               ))}
-            </select>
+              </SelectContent>
+            </Select>
           </label>
           <label className="grid gap-2 text-sm font-medium lg:col-span-2">
             Nama produk
@@ -92,7 +99,7 @@ export default async function AdminProductsPage({
             />
           </label>
           <label className="grid gap-2 text-sm font-medium lg:col-span-5">
-            Source URL
+            Link sumber
             <input
               name="sourceUrl"
               type="url"
@@ -110,13 +117,13 @@ export default async function AdminProductsPage({
             />
           </label>
           <label className="grid gap-2 text-sm font-medium lg:col-span-3">
-            Varian
+            Pilihan produk
             <textarea
               required
               name="variants"
               rows={5}
               className="rounded-md border bg-background px-3 py-2 font-mono text-sm"
-              placeholder={"Standard Version | STD | 20\nLimited Version | LTD | 10\nRandom Member"}
+              placeholder={"Versi Standard | STD | 20\nVersi Limited | LTD | 10\nMember acak"}
             />
           </label>
           <div className="lg:col-span-6">
@@ -131,7 +138,7 @@ export default async function AdminProductsPage({
         {products.length === 0 ? (
           <div className="app-surface-soft border-dashed p-8 text-sm text-muted-foreground">
             Belum ada produk di katalog. Tambahkan item merch pertama agar
-            customer bisa mulai order dari batch PO aktif.
+            pemesan bisa mulai order dari batch PO aktif.
           </div>
         ) : (
           products.map((product) => (
@@ -185,7 +192,7 @@ export default async function AdminProductsPage({
                   {product.isActive ? "Sembunyikan produk" : "Tampilkan produk"}
                 </Button>
                 <p className="mt-2 text-xs text-muted-foreground">
-                  Produk tersembunyi tidak muncul di katalog customer.
+                  Produk tersembunyi tidak muncul di katalog pemesan.
                 </p>
               </form>
             </article>

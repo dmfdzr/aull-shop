@@ -117,7 +117,7 @@ export async function addShipmentEventAction(formData: FormData) {
     redirectWithFlash(
       `/admin/orders/${formData.get("orderId") ?? ""}`,
       "error",
-      "Data shipment tidak valid."
+      "Data pengiriman tidak valid."
     )
   }
 
@@ -154,7 +154,7 @@ export async function addShipmentEventAction(formData: FormData) {
     redirectWithFlash(
       `/admin/orders/${parsed.data.orderId}`,
       "error",
-      "Shipment event gagal disimpan."
+      "Kabar pengiriman gagal disimpan."
     )
   }
 
@@ -164,7 +164,7 @@ export async function addShipmentEventAction(formData: FormData) {
   redirectWithFlash(
     `/admin/orders/${parsed.data.orderId}`,
     "success",
-    "Shipment event berhasil ditambahkan."
+    "Kabar pengiriman berhasil ditambahkan."
   )
 }
 

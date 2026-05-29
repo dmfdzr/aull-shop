@@ -3,6 +3,14 @@ import { AppAlert } from "@/components/app-alert"
 import { SectionHeader } from "@/components/page-chrome"
 import { StatusBadge } from "@/components/status-badge"
 import { Button } from "@/components/ui/button"
+import { DateTimePicker } from "@/components/ui/date-time-picker"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { getBatches } from "@/lib/admin-data"
 import { requireAdminUser } from "@/lib/auth"
 import { createBatchAction, updateBatchStatusAction } from "./actions"
@@ -33,7 +41,7 @@ export default async function AdminBatchesPage({
         <SectionHeader
           eyebrow="Setup PO"
           title="Tambah PO batch"
-          description="Batch berstatus OPEN akan langsung tampil di katalog customer."
+          description="Batch berstatus dibuka akan langsung tampil di katalog pemesan."
         />
         <form action={createBatchAction} className="grid gap-4 lg:grid-cols-6">
           <label className="grid gap-2 text-sm font-medium lg:col-span-2">
@@ -55,38 +63,31 @@ export default async function AdminBatchesPage({
           </label>
           <label className="grid gap-2 text-sm font-medium">
             Buka PO
-            <input
-              name="openAt"
-              type="datetime-local"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-            />
+            <DateTimePicker name="openAt" placeholder="Pilih waktu buka" />
           </label>
           <label className="grid gap-2 text-sm font-medium">
             Tutup PO
-            <input
-              name="closeAt"
-              type="datetime-local"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-            />
+            <DateTimePicker name="closeAt" placeholder="Pilih waktu tutup" />
           </label>
           <label className="grid gap-2 text-sm font-medium">
             Status
-            <select
-              name="status"
-              defaultValue="OPEN"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
-            >
-              <option value="DRAFT">Draft</option>
-              <option value="OPEN">Open</option>
-              <option value="CLOSED">Closed</option>
-            </select>
+            <Select name="status" defaultValue="OPEN">
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="DRAFT">Draft</SelectItem>
+                <SelectItem value="OPEN">Dibuka</SelectItem>
+                <SelectItem value="CLOSED">Ditutup</SelectItem>
+              </SelectContent>
+            </Select>
           </label>
           <label className="grid gap-2 text-sm font-medium lg:col-span-5">
             Deskripsi
             <input
               name="description"
               className="h-10 rounded-md border bg-background px-3 text-sm"
-              placeholder="Catatan internal atau info PO"
+              placeholder="Catatan admin atau info PO"
             />
           </label>
           <div className="flex items-end">
@@ -113,8 +114,8 @@ export default async function AdminBatchesPage({
                 <th className="px-4 py-3 font-medium">Status</th>
                 <th className="px-4 py-3 font-medium">Tutup PO</th>
                 <th className="px-4 py-3 font-medium">Produk</th>
-                <th className="px-4 py-3 font-medium">Order</th>
-                <th className="px-4 py-3 font-medium">Action</th>
+                <th className="px-4 py-3 font-medium">Pesanan</th>
+                <th className="px-4 py-3 font-medium">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -151,23 +152,27 @@ export default async function AdminBatchesPage({
                       >
                         <input type="hidden" name="id" value={batch.id} />
                         <div className="flex gap-2">
-                          <select
-                            name="status"
-                            defaultValue={batch.status}
-                            className="h-9 rounded-md border bg-background px-2 text-xs"
-                          >
-                            <option value="DRAFT">Draft</option>
-                            <option value="OPEN">Open</option>
-                            <option value="CLOSED">Closed</option>
-                            <option value="ORDERED">Ordered</option>
-                            <option value="COMPLETED">Completed</option>
-                          </select>
+                          <Select name="status" defaultValue={batch.status}>
+                            <SelectTrigger className="min-h-9 min-w-36 text-xs">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="DRAFT">Draft</SelectItem>
+                              <SelectItem value="OPEN">Dibuka</SelectItem>
+                              <SelectItem value="CLOSED">Ditutup</SelectItem>
+                              <SelectItem value="ORDERED">Sudah dipesan</SelectItem>
+                              <SelectItem value="COMPLETED">
+                                Selesai
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
                           <Button type="submit" variant="outline" size="sm">
-                            Update status
+                            Simpan status
                           </Button>
                         </div>
                         <p className="text-xs text-muted-foreground">
-                          OPEN tampil untuk customer, CLOSED menutup order baru.
+                          Status dibuka tampil untuk pemesan, status ditutup
+                          menghentikan pesanan baru.
                         </p>
                       </form>
                     </td>

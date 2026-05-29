@@ -101,12 +101,12 @@ export async function updateBatchStatusAction(formData: FormData) {
       },
     })
   } catch {
-    redirectWithFlash("/admin/batches", "error", "Status batch gagal diupdate.")
+    redirectWithFlash("/admin/batches", "error", "Status batch gagal diperbarui.")
   }
 
   revalidatePath("/admin/batches")
   revalidatePath("/admin/products")
   revalidatePath("/")
   revalidatePath("/checkout")
-  redirectWithFlash("/admin/batches", "success", "Status batch berhasil diupdate.")
+  redirectWithFlash("/admin/batches", "success", "Status batch berhasil diperbarui.")
 }

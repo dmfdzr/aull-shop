@@ -73,5 +73,5 @@ export async function signInAdminAction(formData: FormData) {
     redirectWithFlash("/admin/login", "error", message)
   }
 
-  redirect("/admin?status=success&message=Login%20berhasil.")
+  redirect("/admin")
 }

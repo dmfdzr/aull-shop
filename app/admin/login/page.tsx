@@ -2,6 +2,7 @@ import Link from "next/link"
 import { signInAdminAction } from "@/app/admin/login/actions"
 import { AppAlert } from "@/components/app-alert"
 import { Button } from "@/components/ui/button"
+import { LoginSubmitButton } from "./login-submit-button"
 
 type AdminLoginPageProps = {
   searchParams: Promise<{
@@ -26,11 +27,11 @@ export default async function AdminLoginPage({
           message={flash.message}
         />
         <div>
-          <p className="text-sm font-medium text-primary">Admin area</p>
+          <p className="text-sm font-medium text-primary">Area admin</p>
           <h1 className="mt-1 text-2xl font-semibold">Login SKZmart</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Masuk untuk mengelola PO batch, katalog, masterlist, pembayaran,
-            dan shipment.
+            Masuk untuk mengelola PO batch, katalog, daftar order, pembayaran,
+            dan pengiriman.
           </p>
         </div>
 
@@ -60,9 +61,7 @@ export default async function AdminLoginPage({
           />
         </div>
 
-        <Button type="submit" size="lg">
-          Masuk dashboard admin
-        </Button>
+        <LoginSubmitButton />
         <Button asChild variant="ghost">
           <Link href="/">Kembali ke katalog</Link>
         </Button>
