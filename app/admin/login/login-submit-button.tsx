@@ -27,7 +27,7 @@ export function LoginSubmitButton() {
                 id="login-pending-description"
                 className="mt-2 text-sm leading-6 text-muted-foreground"
               >
-                Sedang memeriksa akun admin dan menyiapkan dashboard SKZmart.
+                Sedang memeriksa akun admin dan menyiapkan beranda SKZ Mart.
               </p>
             </div>
           </div>,

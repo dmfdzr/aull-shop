@@ -8,6 +8,20 @@ export const metadata: Metadata = {
     template: "%s | SKZ Mart",
   },
   description: "SKZ Mart preorder hub.",
+  icons: {
+    icon: [
+      {
+        url: "/assets/favicon.png",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/assets/favicon.png",
+        type: "image/png",
+      },
+    ],
+  },
 }
 
 export default function RootLayout({

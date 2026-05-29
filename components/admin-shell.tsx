@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { LogoutConfirmation } from "@/components/logout-confirmation"
 import { Button } from "@/components/ui/button"
 import { signOutAdminAction } from "@/app/admin/actions"
@@ -22,8 +23,15 @@ export function AdminShell({ children, title, description }: AdminShellProps) {
       <header className="app-header sticky top-0 z-30">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-5 px-5 py-4 md:flex-row md:items-center md:justify-between md:px-8">
           <div>
-            <Link href="/admin" className="app-chip text-primary">
-              SKZmart Ops
+            <Link href="/admin" className="brand-lockup">
+              <Image
+                src="/assets/favicon.png"
+                alt=""
+                width={36}
+                height={36}
+                className="size-9 rounded-xl object-cover"
+              />
+              <span>SKZ Mart Admin</span>
             </Link>
             <h1 className="mt-3 text-2xl font-semibold md:text-3xl">{title}</h1>
             {description ? (

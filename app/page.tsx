@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { StatusBadge } from "@/components/status-badge"
 import { getActiveCatalog } from "@/lib/catalog"
@@ -25,12 +26,22 @@ export default async function Page() {
         <div className="app-shell-grid absolute inset-0 opacity-45" />
         <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-5 py-10 md:px-8 md:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="max-w-3xl space-y-6">
+            <div className="brand-lockup w-fit">
+              <Image
+                src="/assets/favicon.png"
+                alt=""
+                width={40}
+                height={40}
+                className="size-10 rounded-xl object-cover"
+              />
+              <span>SKZ Mart</span>
+            </div>
             <div className="flex flex-wrap gap-2">
               <StatusBadge tone="blue">K-pop merch PO</StatusBadge>
               <span className="app-chip">pantau PO lebih mudah</span>
             </div>
             <h1 className="text-4xl font-semibold leading-tight text-foreground md:text-6xl">
-              SKZmart preorder hub yang lebih rapi, cepat, dan mudah dipantau.
+              SKZ Mart preorder hub yang lebih rapi, cepat, dan mudah dipantau.
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground md:text-lg">
               Pesan merch, amankan slot PO, dan pantau progress order dari DP
@@ -137,7 +148,7 @@ export default async function Page() {
         {batches.length === 0 ? (
           <div className="app-surface-soft border-dashed p-8 text-sm text-muted-foreground">
             Belum ada PO aktif saat ini. Cek kembali nanti untuk batch merch
-            terbaru dari SKZmart.
+            terbaru dari SKZ Mart.
           </div>
         ) : (
           <div className="grid gap-5">
