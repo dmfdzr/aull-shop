@@ -1,6 +1,13 @@
 import "./globals.css"
 import type { Metadata } from "next"
+import ClickSpark from "@/components/ClickSpark"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Raleway } from "next/font/google"
+
+const raleway = Raleway({
+  subsets: ["latin"],
+  variable: "--font-raleway",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -33,10 +40,20 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className="font-sans antialiased"
+      className={`${raleway.variable} font-sans antialiased`}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ClickSpark
+          sparkColor="#7bbff2"
+          sparkSize={9}
+          sparkRadius={22}
+          sparkCount={10}
+          duration={430}
+          easing="ease-out"
+          extraScale={1.25}
+        >
+          <ThemeProvider>{children}</ThemeProvider>
+        </ClickSpark>
       </body>
     </html>
   )
