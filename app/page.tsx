@@ -30,10 +30,10 @@ export default async function Page() {
   const highlightedProducts = featuredProducts.slice(0, 3)
 
   return (
-    <main className="min-h-svh overflow-hidden">
-      <section className="brand-hero relative flex min-h-svh overflow-hidden">
+    <main className="min-h-svh overflow-x-hidden">
+      <section className="brand-hero relative flex min-h-svh overflow-x-hidden">
         <div className="app-shell-grid absolute inset-0 opacity-45" />
-        <div className="pointer-events-none absolute inset-0 left-1/2 w-screen -translate-x-1/2 opacity-70 dark:opacity-55">
+        <div className="pointer-events-none absolute inset-0 w-full opacity-70 dark:opacity-55">
           <FloatingLines
             linesGradient={heroLineGradient}
             enabledWaves={heroEnabledWaves}
@@ -47,8 +47,8 @@ export default async function Page() {
             mixBlendMode="screen"
           />
         </div>
-        <div className="relative mx-auto grid w-full max-w-7xl gap-7 self-center px-5 py-7 md:px-8 md:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-          <div className="max-w-3xl space-y-5 md:space-y-6">
+        <div className="relative mx-auto grid w-full max-w-7xl gap-6 self-start px-4 py-5 sm:px-5 sm:py-7 md:self-center md:px-8 md:py-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="min-w-0 max-w-3xl space-y-4 md:space-y-6">
             <div className="brand-lockup w-fit">
               <Image
                 src="/assets/favicon.png"
@@ -63,18 +63,18 @@ export default async function Page() {
               <StatusBadge tone="blue">K-pop merch PO</StatusBadge>
               <span className="app-chip">pantau PO lebih mudah</span>
             </div>
-            <h1 className="text-4xl font-semibold leading-tight text-slate-950 dark:text-slate-950 md:text-5xl xl:text-6xl">
+            <h1 className="text-3xl font-semibold leading-tight text-slate-950 dark:text-slate-950 sm:text-4xl md:text-5xl xl:text-6xl">
               SKZ Mart preorder hub yang lebih rapi, cepat, dan mudah dipantau.
             </h1>
-            <p className="max-w-2xl text-base leading-7 text-slate-800 dark:text-slate-800 md:text-lg">
+            <p className="max-w-2xl text-sm leading-6 text-slate-800 dark:text-slate-800 sm:text-base md:text-lg md:leading-7">
               Pesan merch, amankan slot PO, dan pantau progress order dari DP
               sampai checkout Shopee tanpa harus bongkar chat lama.
             </p>
             <div className="flex flex-wrap gap-3">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="w-full sm:w-auto">
                 <Link href="/checkout">Buat order PO</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto">
                 <Link href="/admin">Kelola toko</Link>
               </Button>
             </div>
@@ -94,7 +94,7 @@ export default async function Page() {
             </div>
           </div>
 
-          <div className="app-surface app-panel-highlight p-4 md:p-5">
+          <div className="app-surface app-panel-highlight min-w-0 p-3.5 sm:p-4 md:p-5">
             <div className="mb-4 flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase text-primary">
@@ -114,13 +114,15 @@ export default async function Page() {
                     className="rounded-2xl border border-border/65 bg-card/74 p-4 shadow-sm"
                   >
                     <div className="flex items-start justify-between gap-3">
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-xs text-muted-foreground">
                           {product.batchName}
                         </p>
-                        <h3 className="mt-1 font-semibold">{product.name}</h3>
+                        <h3 className="mt-1 wrap-break-word font-semibold">
+                          {product.name}
+                        </h3>
                       </div>
-                      <StatusBadge tone="amber">
+                      <StatusBadge tone="amber" className="shrink-0">
                         DP {formatCurrency(product.minimumDp)}
                       </StatusBadge>
                     </div>
