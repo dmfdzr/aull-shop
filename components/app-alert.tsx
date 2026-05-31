@@ -48,14 +48,14 @@ export function AppAlert({ status, message }: AppAlertProps) {
   return (
     <div
       role="presentation"
-      className="fixed inset-0 z-50 grid place-items-center bg-background/55 px-5 py-8 backdrop-blur-sm"
+      className="fixed inset-0 z-50 grid place-items-center bg-background/55 px-3.5 py-5 backdrop-blur-sm sm:px-5 sm:py-8"
     >
       <div
         role={safeStatus === "error" ? "alertdialog" : "dialog"}
         aria-modal="true"
         aria-labelledby="feedback-title"
         aria-describedby="feedback-message"
-        className="app-surface w-full max-w-md p-5 text-center shadow-xl"
+        className="app-surface w-full max-w-md p-4 text-center shadow-xl sm:p-5"
       >
         <div
           className={
@@ -76,7 +76,7 @@ export function AppAlert({ status, message }: AppAlertProps) {
           {message}
         </p>
         <div className="mt-5 flex justify-center">
-          <Button type="button" onClick={closeModal}>
+          <Button type="button" onClick={closeModal} className="w-full sm:w-auto">
             {copy.action}
           </Button>
         </div>

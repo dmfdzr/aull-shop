@@ -83,9 +83,9 @@ export default async function AdminOrderDetailPage({
         </BackLinkButton>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+      <div className="grid min-w-0 gap-5 lg:grid-cols-[1.1fr_0.9fr]">
         <section className="space-y-5">
-          <div className="app-surface p-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <div className="mb-4 flex flex-wrap gap-2">
               <StatusBadge tone="amber">
                 {paymentStatusLabel[order.paymentStatus]}
@@ -116,7 +116,7 @@ export default async function AdminOrderDetailPage({
             </dl>
           </div>
 
-          <div className="app-surface p-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Item order"
               description="Barang yang dipilih pemesan saat membuat order."
@@ -125,15 +125,15 @@ export default async function AdminOrderDetailPage({
               {order.items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-start justify-between gap-4 border-b pb-3 last:border-0 last:pb-0"
+                  className="grid gap-2 border-b pb-3 last:border-0 last:pb-0 sm:flex sm:items-start sm:justify-between sm:gap-4"
                 >
-                  <div>
-                    <p className="font-medium">{item.productNameSnapshot}</p>
+                  <div className="min-w-0">
+                    <p className="break-words font-medium">{item.productNameSnapshot}</p>
                     <p className="text-sm text-muted-foreground">
                       {item.variantLabelSnapshot} x {item.quantity}
                     </p>
                   </div>
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-medium sm:text-right">
                     {formatCurrency(item.subtotal)}
                   </p>
                 </div>
@@ -141,7 +141,7 @@ export default async function AdminOrderDetailPage({
             </div>
           </div>
 
-          <div className="app-surface p-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Riwayat pengiriman"
               description="Riwayat pergerakan barang untuk order ini."
@@ -176,8 +176,8 @@ export default async function AdminOrderDetailPage({
           </div>
         </section>
 
-        <aside className="space-y-5">
-          <div className="app-surface p-5">
+        <aside className="min-w-0 space-y-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Verifikasi pembayaran"
               description="Cek bukti DP atau pelunasan sebelum mengubah status."
@@ -188,7 +188,7 @@ export default async function AdminOrderDetailPage({
                   key={payment.id}
                   className="rounded-md border bg-background p-3 text-sm"
                 >
-                  <div className="flex justify-between gap-3">
+                  <div className="grid gap-2 sm:flex sm:justify-between sm:gap-3">
                     <span className="font-medium">{payment.type}</span>
                     <StatusBadge
                       tone={
@@ -234,7 +234,7 @@ export default async function AdminOrderDetailPage({
                         className="h-9 rounded-md border bg-background px-2 text-sm"
                         placeholder="Alasan reject opsional"
                       />
-                      <Button type="submit" size="sm">
+                      <Button type="submit" size="sm" className="w-full sm:w-auto">
                         Simpan hasil verifikasi
                       </Button>
                     </form>
@@ -246,7 +246,7 @@ export default async function AdminOrderDetailPage({
 
           <form
             action={addShipmentEventAction}
-            className="app-surface grid gap-3 p-5"
+            className="app-surface grid gap-3 p-3.5 sm:p-5"
           >
             <SectionHeader
               title="Tambah kabar pengiriman"
@@ -290,24 +290,26 @@ export default async function AdminOrderDetailPage({
             </label>
             <input
               name="location"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="Lokasi"
             />
             <input
               name="trackingNumber"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="Tracking/resi opsional"
             />
             <textarea
               name="notes"
               rows={3}
-              className="rounded-md border bg-background px-3 py-2 text-sm"
+              className="app-field min-h-24 py-2"
               placeholder="Catatan pengiriman"
             />
-            <Button type="submit">Tambah kabar pengiriman</Button>
+            <Button type="submit" className="w-full sm:w-auto">
+              Tambah kabar pengiriman
+            </Button>
           </form>
 
-          <div className="app-surface p-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Status checkout Shopee"
               description="Informasi checkout yang terlihat oleh pemesan."
@@ -339,7 +341,7 @@ export default async function AdminOrderDetailPage({
 
           <form
             action={upsertShopeeInstructionAction}
-            className="app-surface grid gap-3 p-5"
+            className="app-surface grid gap-3 p-3.5 sm:p-5"
           >
             <SectionHeader
               title="Instruksi Shopee"
@@ -351,17 +353,19 @@ export default async function AdminOrderDetailPage({
               required
               name="instructionText"
               rows={3}
-              className="rounded-md border bg-background px-3 py-2 text-sm"
+              className="app-field min-h-24 py-2"
               placeholder="Arahan checkout untuk pemesan"
               defaultValue={order.shopeeCheckout?.instructionText ?? ""}
             />
             <input
               name="instructionUrl"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="https://shopee.co.id/..."
               defaultValue={order.shopeeCheckout?.instructionUrl ?? ""}
             />
-            <Button type="submit">Simpan instruksi Shopee</Button>
+            <Button type="submit" className="w-full sm:w-auto">
+              Simpan instruksi Shopee
+            </Button>
           </form>
         </aside>
       </div>

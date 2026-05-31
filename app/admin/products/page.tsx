@@ -37,7 +37,7 @@ export default async function AdminProductsPage({
       description="Produk dan pilihan PO yang tampil untuk pemesan."
     >
       <AppAlert status={flash.status} message={flash.message} />
-      <section className="app-surface mb-6 p-5">
+      <section className="app-surface mb-6 p-3.5 sm:p-5">
         <SectionHeader
           eyebrow="Katalog PO"
           title="Tambah produk"
@@ -64,7 +64,7 @@ export default async function AdminProductsPage({
             <input
               required
               name="name"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="Album / Lightstick / Photocard"
             />
           </label>
@@ -72,7 +72,7 @@ export default async function AdminProductsPage({
             Negara
             <input
               name="sourceCountry"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="Korea"
             />
           </label>
@@ -83,7 +83,7 @@ export default async function AdminProductsPage({
               name="estimatedPrice"
               type="number"
               min="1"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="250000"
             />
           </label>
@@ -94,7 +94,7 @@ export default async function AdminProductsPage({
               name="minimumDp"
               type="number"
               min="1"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="50000"
             />
           </label>
@@ -103,7 +103,7 @@ export default async function AdminProductsPage({
             <input
               name="sourceUrl"
               type="url"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="https://..."
             />
           </label>
@@ -112,7 +112,7 @@ export default async function AdminProductsPage({
             <textarea
               name="description"
               rows={5}
-              className="rounded-md border bg-background px-3 py-2 text-sm"
+              className="app-field min-h-28 py-2"
               placeholder="Info item, benefit PO, atau catatan versi."
             />
           </label>
@@ -122,12 +122,12 @@ export default async function AdminProductsPage({
               required
               name="variants"
               rows={5}
-              className="rounded-md border bg-background px-3 py-2 font-mono text-sm"
+              className="app-field min-h-28 py-2 font-mono"
               placeholder={"Versi Standard | STD | 20\nVersi Limited | LTD | 10\nMember acak"}
             />
           </label>
           <div className="lg:col-span-6">
-            <Button type="submit" disabled={batches.length === 0}>
+            <Button type="submit" disabled={batches.length === 0} className="w-full sm:w-auto">
               Tambah produk ke katalog
             </Button>
           </div>
@@ -147,8 +147,8 @@ export default async function AdminProductsPage({
               className="app-surface p-4"
             >
               <div className="mb-3 flex items-start justify-between gap-3">
-                <div>
-                  <h2 className="font-semibold">{product.name}</h2>
+                <div className="min-w-0">
+                  <h2 className="break-words font-semibold">{product.name}</h2>
                   <p className="text-sm text-muted-foreground">
                     {product.batch.name}
                   </p>
@@ -188,7 +188,7 @@ export default async function AdminProductsPage({
                   name="isActive"
                   value={product.isActive ? "false" : "true"}
                 />
-                <Button type="submit" variant="outline" size="sm">
+                <Button type="submit" variant="outline" size="sm" className="w-full sm:w-auto">
                   {product.isActive ? "Sembunyikan produk" : "Tampilkan produk"}
                 </Button>
                 <p className="mt-2 text-xs text-muted-foreground">

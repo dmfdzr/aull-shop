@@ -5,7 +5,7 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "group/button relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-transparent bg-clip-padding text-sm font-semibold whitespace-nowrap shadow-[0_12px_28px_color-mix(in_oklch,var(--primary),transparent_86%)] transition-all duration-300 ease-out outline-none select-none before:absolute before:inset-0 before:-translate-x-full before:bg-[linear-gradient(110deg,transparent,color-mix(in_oklch,var(--primary-foreground),transparent_72%),transparent)] before:opacity-70 before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_color-mix(in_oklch,var(--primary),transparent_78%)] hover:before:translate-x-full focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px active:not-aria-[haspopup]:scale-[0.98] disabled:pointer-events-none disabled:translate-y-0 disabled:scale-100 disabled:opacity-50 disabled:shadow-none disabled:before:hidden aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&>*]:relative [&>*]:z-10 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button relative inline-flex max-w-full shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-transparent bg-clip-padding text-center text-sm font-semibold leading-5 shadow-[0_12px_28px_color-mix(in_oklch,var(--primary),transparent_86%)] transition-all duration-300 ease-out outline-none select-none before:absolute before:inset-0 before:-translate-x-full before:bg-[linear-gradient(110deg,transparent,color-mix(in_oklch,var(--primary-foreground),transparent_72%),transparent)] before:opacity-70 before:transition-transform before:duration-700 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_color-mix(in_oklch,var(--primary),transparent_78%)] hover:before:translate-x-full focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/30 active:not-aria-[haspopup]:translate-y-px active:not-aria-[haspopup]:scale-[0.98] disabled:pointer-events-none disabled:translate-y-0 disabled:scale-100 disabled:opacity-50 disabled:shadow-none disabled:before:hidden aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&>*]:relative [&>*]:z-10 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
@@ -23,10 +23,10 @@ const buttonVariants = cva(
       },
       size: {
         default:
-          "h-10 gap-2 px-4 has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5",
-        xs: "h-8 gap-1.5 px-3 text-xs has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3.5",
-        sm: "h-9 gap-1.5 px-3.5 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
-        lg: "h-12 gap-2.5 px-5 text-base has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
+          "min-h-10 gap-2 px-4 py-2 has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5",
+        xs: "min-h-8 gap-1.5 px-3 py-1.5 text-xs has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5 [&_svg:not([class*='size-'])]:size-3.5",
+        sm: "min-h-9 gap-1.5 px-3.5 py-1.5 has-data-[icon=inline-end]:pr-3 has-data-[icon=inline-start]:pl-3",
+        lg: "min-h-12 gap-2.5 px-5 py-2.5 text-base has-data-[icon=inline-end]:pr-4 has-data-[icon=inline-start]:pl-4",
         icon: "size-10",
         "icon-xs": "size-8 [&_svg:not([class*='size-'])]:size-3.5",
         "icon-sm": "size-9",

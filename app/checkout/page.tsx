@@ -27,16 +27,16 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
   const options = await getCheckoutOptions()
 
   return (
-    <main className="min-h-svh">
-      <div className="mx-auto grid w-full max-w-7xl gap-8 px-5 py-8 md:px-8 md:py-12 lg:grid-cols-[0.86fr_1.14fr]">
+    <main className="min-h-svh overflow-x-hidden">
+      <div className="mx-auto grid w-full max-w-7xl gap-5 px-3.5 py-5 sm:px-5 sm:py-8 md:px-8 md:py-12 lg:grid-cols-[0.86fr_1.14fr]">
         <aside className="space-y-5 lg:sticky lg:top-28 lg:self-start">
           <BackLinkButton href="/">Kembali ke katalog</BackLinkButton>
-          <div className="app-surface app-panel-highlight p-5 md:p-6">
+          <div className="app-surface app-panel-highlight p-3.5 sm:p-5 md:p-6">
             <div className="space-y-3">
               <p className="text-xs font-semibold uppercase text-primary">
                 Form pemesanan PO
               </p>
-              <h1 className="text-3xl font-semibold leading-tight md:text-5xl">
+              <h1 className="text-2xl font-semibold leading-tight sm:text-3xl md:text-5xl">
                 Order merch dan amankan slot PO.
               </h1>
               <p className="text-sm leading-6 text-muted-foreground">
@@ -63,7 +63,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
               ))}
             </div>
           </div>
-          <div className="app-surface-soft p-4 text-sm leading-6 text-muted-foreground">
+          <div className="app-surface-soft p-3.5 text-sm leading-6 text-muted-foreground sm:p-4">
             <p className="font-medium text-foreground">Kirim bukti</p>
             <p className="mt-1">
               Kirim gambar atau PDF. Gambar akan diperkecil otomatis sebelum
@@ -74,7 +74,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
 
         <form
           action={createOrderAction}
-          className="app-surface grid gap-5 p-4 md:p-6"
+          className="app-surface grid gap-5 p-3.5 sm:p-4 md:p-6"
         >
           <AppAlert
             status={flash.status}
@@ -239,7 +239,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
             </div>
           </section>
 
-          <Button type="submit" size="lg" disabled={options.length === 0}>
+          <Button type="submit" size="lg" disabled={options.length === 0} className="w-full sm:w-auto">
             Kirim order PO
           </Button>
         </form>

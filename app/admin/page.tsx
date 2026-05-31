@@ -40,12 +40,12 @@ export default async function AdminDashboardPage({
       description="Ringkasan operasional PO dan pekerjaan yang perlu dicek."
     >
       <AppAlert status={flash.status} message={flash.message} />
-      <section className="app-surface app-panel-highlight mb-6 grid gap-5 p-5 md:grid-cols-[1.2fr_0.8fr] md:p-6">
-        <div>
+      <section className="app-surface app-panel-highlight mb-6 grid gap-5 p-3.5 sm:p-5 md:grid-cols-[1.2fr_0.8fr] md:p-6">
+        <div className="min-w-0">
           <p className="text-xs font-semibold uppercase text-primary">
             Pusat kerja admin
           </p>
-          <h2 className="mt-2 text-2xl font-semibold md:text-3xl">
+          <h2 className="mt-2 text-xl font-semibold sm:text-2xl md:text-3xl">
             Prioritaskan pekerjaan yang menahan order.
           </h2>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
@@ -65,13 +65,10 @@ export default async function AdminDashboardPage({
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-5">
+      <section className="grid gap-3 sm:grid-cols-2 md:grid-cols-5">
         {statCards.map((card) => (
-          <div
-            key={card.label}
-            className="app-stat-card"
-          >
-            <div className="mb-4 flex items-center justify-between gap-3">
+          <div key={card.label} className="app-stat-card">
+            <div className="mb-4 flex items-start justify-between gap-3">
               <span className="text-sm text-muted-foreground">{card.label}</span>
               <StatusBadge tone={card.tone as "blue" | "amber" | "green"}>
                 Aktif
@@ -83,14 +80,14 @@ export default async function AdminDashboardPage({
       </section>
 
       <section className="app-table mt-6">
-        <div className="flex flex-col justify-between gap-3 border-b p-4 md:flex-row md:items-center md:p-5">
+        <div className="flex flex-col justify-between gap-3 border-b p-3.5 sm:p-4 md:flex-row md:items-center md:p-5">
           <div>
             <h2 className="font-semibold">Order terbaru</h2>
             <p className="mt-1 text-sm text-muted-foreground">
             Ringkasan cepat sebelum membuka daftar order lengkap.
             </p>
           </div>
-          <Button asChild variant="outline" size="sm">
+          <Button asChild variant="outline" size="sm" className="w-full sm:w-auto">
             <Link href="/admin/orders">Lihat semua order</Link>
           </Button>
         </div>

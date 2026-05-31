@@ -31,7 +31,7 @@ export function LogoutConfirmation({ action }: LogoutConfirmationProps) {
     isOpen && portalRoot
       ? createPortal(
           <div
-            className="fixed inset-0 z-[1000] grid place-items-center bg-background/70 px-5 py-8 backdrop-blur-md"
+            className="fixed inset-0 z-[1000] grid place-items-center bg-background/70 px-3.5 py-5 backdrop-blur-md sm:px-5 sm:py-8"
             onMouseDown={() => setIsOpen(false)}
           >
             <div
@@ -39,7 +39,7 @@ export function LogoutConfirmation({ action }: LogoutConfirmationProps) {
               aria-modal="true"
               aria-labelledby="logout-title"
               aria-describedby="logout-description"
-              className="app-surface w-full max-w-md p-5 shadow-2xl"
+              className="app-surface w-full max-w-md p-4 shadow-2xl sm:p-5"
               onMouseDown={(event) => event.stopPropagation()}
             >
               <div className="mx-auto mb-4 grid size-12 place-items-center rounded-full bg-accent text-lg font-bold text-accent-foreground">
@@ -87,6 +87,7 @@ export function LogoutConfirmation({ action }: LogoutConfirmationProps) {
         type="button"
         variant="ghost"
         size="sm"
+        className="w-full sm:w-auto"
         onClick={() => setIsOpen(true)}
       >
         Logout

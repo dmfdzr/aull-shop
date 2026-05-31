@@ -34,16 +34,16 @@ export default async function AdminOrdersPage({
         title="Unduh laporan"
         description="Ambil daftar order untuk rekap owner atau pengecekan operasional."
       >
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="w-full sm:w-auto">
           <Link href="/api/admin/orders/export?format=csv">Unduh CSV</Link>
         </Button>
-        <Button asChild variant="outline">
+        <Button asChild variant="outline" className="w-full sm:w-auto">
           <Link href="/api/admin/orders/export?format=xlsx">Unduh XLSX</Link>
         </Button>
       </ActionToolbar>
 
       <section className="app-table">
-        <div className="border-b p-4">
+        <div className="border-b p-3.5 sm:p-4">
           <SectionHeader
             title="Order masuk"
             description="Pantau pemesan, batch, nilai order, pembayaran, dan posisi pengiriman."

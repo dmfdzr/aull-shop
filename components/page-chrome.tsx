@@ -19,7 +19,7 @@ export function BackLinkButton({
       variant="ghost"
       size="sm"
       className={cn(
-        "-ml-2 h-9 rounded-full px-3 text-muted-foreground hover:bg-secondary hover:text-foreground",
+        "-ml-2 min-h-9 rounded-full px-3 text-muted-foreground hover:bg-secondary hover:text-foreground",
         className
       )}
     >
@@ -46,7 +46,7 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        "mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-start",
+        "mb-5 flex min-w-0 flex-col justify-between gap-3 md:flex-row md:items-start",
         className
       )}
     >
@@ -64,7 +64,7 @@ export function SectionHeader({
         ) : null}
       </div>
       {actions ? (
-        <div className="flex shrink-0 flex-wrap gap-2">{actions}</div>
+        <div className="grid shrink-0 gap-2 sm:flex sm:flex-wrap">{actions}</div>
       ) : null}
     </div>
   )
@@ -82,14 +82,14 @@ export function ActionToolbar({
   children,
 }: ActionToolbarProps) {
   return (
-    <section className="app-surface mb-6 flex flex-col justify-between gap-4 p-4 md:flex-row md:items-center md:p-5">
-      <div>
+    <section className="app-surface mb-6 flex flex-col justify-between gap-4 p-3.5 sm:p-4 md:flex-row md:items-center md:p-5">
+      <div className="min-w-0">
         <h2 className="font-semibold">{title}</h2>
         {description ? (
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         ) : null}
       </div>
-      <div className="flex flex-wrap gap-2">{children}</div>
+      <div className="grid gap-2 sm:flex sm:flex-wrap">{children}</div>
     </section>
   )
 }

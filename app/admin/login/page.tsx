@@ -17,10 +17,10 @@ export default async function AdminLoginPage({
   const flash = await searchParams
 
   return (
-    <main className="grid min-h-svh place-items-center px-5 py-8">
+    <main className="grid min-h-svh place-items-center overflow-x-hidden px-3.5 py-5 sm:px-5 sm:py-8">
       <form
         action={signInAdminAction}
-        className="app-surface grid w-full max-w-sm gap-5 p-5"
+        className="app-surface grid w-full max-w-sm gap-5 p-3.5 sm:p-5"
       >
         <AppAlert
           status={flash.status}
@@ -44,7 +44,7 @@ export default async function AdminLoginPage({
             id="email"
             name="email"
             type="email"
-            className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+            className="app-field"
           />
         </div>
 
@@ -57,12 +57,12 @@ export default async function AdminLoginPage({
             id="password"
             name="password"
             type="password"
-            className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+            className="app-field"
           />
         </div>
 
         <LoginSubmitButton />
-        <Button asChild variant="ghost">
+        <Button asChild variant="ghost" className="w-full">
           <Link href="/">Kembali ke katalog</Link>
         </Button>
       </form>

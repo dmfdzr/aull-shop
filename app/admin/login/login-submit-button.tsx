@@ -9,13 +9,13 @@ export function LoginSubmitButton() {
   const dialog =
     pending && portalRoot
       ? createPortal(
-          <div className="fixed inset-0 z-[1000] grid place-items-center bg-background/70 px-5 py-8 backdrop-blur-md">
+          <div className="fixed inset-0 z-[1000] grid place-items-center bg-background/70 px-3.5 py-5 backdrop-blur-md sm:px-5 sm:py-8">
             <div
               role="dialog"
               aria-modal="true"
               aria-labelledby="login-pending-title"
               aria-describedby="login-pending-description"
-              className="app-surface w-full max-w-sm p-6 text-center shadow-2xl"
+              className="app-surface w-full max-w-sm p-4 text-center shadow-2xl sm:p-6"
             >
               <div className="mx-auto mb-5 grid size-14 place-items-center rounded-full bg-primary/15">
                 <span className="size-7 animate-spin rounded-full border-3 border-primary/25 border-t-primary" />
@@ -37,7 +37,7 @@ export function LoginSubmitButton() {
 
   return (
     <>
-      <Button type="submit" size="lg" disabled={pending}>
+      <Button type="submit" size="lg" disabled={pending} className="w-full">
         {pending ? "Mengarahkan..." : "Masuk dashboard admin"}
       </Button>
       {dialog}

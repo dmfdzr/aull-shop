@@ -125,7 +125,7 @@ export function ProofFileInput({
         type="file"
         accept="image/jpeg,image/png,image/webp,application/pdf"
         className={cn(
-          "app-field py-2 file:mr-3 file:rounded-xl file:border-0 file:bg-primary file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-primary-foreground",
+          "app-field py-2 text-xs file:mr-2 file:rounded-xl file:border-0 file:bg-primary file:px-2.5 file:py-1.5 file:text-xs file:font-semibold file:text-primary-foreground sm:text-sm sm:file:mr-3 sm:file:px-3 sm:file:text-sm",
           className
         )}
         onChange={handleChange}

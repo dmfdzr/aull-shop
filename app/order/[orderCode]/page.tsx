@@ -62,16 +62,18 @@ export default async function OrderStatusPage({
   }
 
   return (
-    <main className="min-h-svh">
-      <div className="mx-auto w-full max-w-4xl space-y-6 px-5 py-8 md:px-8 md:py-12">
+    <main className="min-h-svh overflow-x-hidden">
+      <div className="mx-auto w-full max-w-4xl space-y-5 px-3.5 py-5 sm:px-5 sm:py-8 md:px-8 md:py-12">
         <BackLinkButton href="/">Kembali ke katalog</BackLinkButton>
         <AppAlert status={flash.status} message={flash.message} />
 
-        <section className="app-surface p-5">
+        <section className="app-surface p-3.5 sm:p-5">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-start">
             <div>
               <p className="text-sm text-muted-foreground">Kode order</p>
-              <h1 className="text-3xl font-semibold">{order.orderCode}</h1>
+              <h1 className="break-all text-2xl font-semibold sm:text-3xl">
+                {order.orderCode}
+              </h1>
               <p className="mt-2 text-sm text-muted-foreground">
                 Pemesan: {order.customer.name}
               </p>
@@ -88,7 +90,7 @@ export default async function OrderStatusPage({
         </section>
 
         <section className="grid gap-4 md:grid-cols-2">
-          <div className="app-surface p-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Item order"
               description="Ringkasan barang dan pilihan yang kamu pesan."
@@ -97,15 +99,15 @@ export default async function OrderStatusPage({
               {order.items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-start justify-between gap-4 border-b pb-3 last:border-0 last:pb-0"
+                  className="grid gap-2 border-b pb-3 last:border-0 last:pb-0 sm:flex sm:items-start sm:justify-between sm:gap-4"
                 >
-                  <div>
-                    <p className="font-medium">{item.productNameSnapshot}</p>
+                  <div className="min-w-0">
+                    <p className="break-words font-medium">{item.productNameSnapshot}</p>
                     <p className="text-sm text-muted-foreground">
                       {item.variantLabelSnapshot} x {item.quantity}
                     </p>
                   </div>
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-medium sm:text-right">
                     {formatCurrency(item.subtotal)}
                   </p>
                 </div>
@@ -113,19 +115,19 @@ export default async function OrderStatusPage({
             </div>
           </div>
 
-          <div className="app-surface p-5">
+          <div className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Pembayaran"
               description="Status DP dan pelunasan yang sudah tercatat."
             />
             <div className="space-y-3">
-              <div className="flex justify-between gap-4 text-sm">
+              <div className="grid gap-1 text-sm sm:flex sm:justify-between sm:gap-4">
                 <span className="text-muted-foreground">Estimasi total</span>
                 <span className="font-medium">
                   {formatCurrency(order.estimatedTotal)}
                 </span>
               </div>
-              <div className="flex justify-between gap-4 text-sm">
+              <div className="grid gap-1 text-sm sm:flex sm:justify-between sm:gap-4">
                 <span className="text-muted-foreground">DP tercatat</span>
                 <span className="font-medium">{formatCurrency(order.dpTotal)}</span>
               </div>
@@ -134,7 +136,7 @@ export default async function OrderStatusPage({
                   key={payment.id}
                   className="rounded-md border bg-background p-3 text-sm"
                 >
-                  <div className="flex justify-between gap-3">
+                  <div className="grid gap-2 sm:flex sm:justify-between sm:gap-3">
                     <span>{payment.type}</span>
                     <StatusBadge
                       tone={
@@ -157,7 +159,7 @@ export default async function OrderStatusPage({
           </div>
         </section>
 
-        <section className="app-surface p-5">
+        <section className="app-surface p-3.5 sm:p-5">
           <SectionHeader
             title="Timeline pengiriman"
             description="Kabar posisi barang dari admin akan muncul di sini."
@@ -190,7 +192,7 @@ export default async function OrderStatusPage({
         </section>
 
         {order.shopeeCheckout ? (
-          <section className="app-surface p-5">
+          <section className="app-surface p-3.5 sm:p-5">
             <SectionHeader
               title="Checkout Shopee"
               description="Kirim link pesanan atau bukti checkout setelah mengikuti arahan admin."
@@ -200,7 +202,7 @@ export default async function OrderStatusPage({
                 "Instruksi checkout Shopee sudah tersedia dari admin."}
             </p>
             {order.shopeeCheckout.instructionUrl ? (
-              <Button asChild className="mt-4">
+              <Button asChild className="mt-4 w-full sm:w-auto">
                 <Link href={order.shopeeCheckout.instructionUrl}>
                   Buka link Shopee
                 </Link>
@@ -216,7 +218,7 @@ export default async function OrderStatusPage({
                 <input
                   name="customerInvoiceUrl"
                   type="url"
-                  className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                  className="app-field"
                   placeholder="https://shopee.co.id/..."
                 />
               </label>
@@ -226,12 +228,14 @@ export default async function OrderStatusPage({
                   name="proofFile"
                 />
               </label>
-              <Button type="submit">Kirim bukti checkout Shopee</Button>
+              <Button type="submit" className="w-full sm:w-auto">
+                Kirim bukti checkout Shopee
+              </Button>
             </form>
           </section>
         ) : null}
 
-        <section className="app-surface p-5">
+        <section className="app-surface p-3.5 sm:p-5">
           <SectionHeader
             title="Kirim bukti pelunasan"
             description="Gunakan form ini setelah admin menginfokan nominal final."
@@ -245,7 +249,7 @@ export default async function OrderStatusPage({
                 name="amount"
                 type="number"
                 min="1"
-                className="h-11 rounded-md border bg-background px-3 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/30"
+                className="app-field"
                 placeholder="100000"
               />
             </label>
@@ -256,7 +260,9 @@ export default async function OrderStatusPage({
                 name="proofFile"
               />
             </label>
-            <Button type="submit">Kirim bukti pelunasan</Button>
+            <Button type="submit" className="w-full sm:w-auto">
+              Kirim bukti pelunasan
+            </Button>
           </form>
         </section>
       </div>

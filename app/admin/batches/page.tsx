@@ -37,7 +37,7 @@ export default async function AdminBatchesPage({
       description="Kelola periode PO, buka/tutup batch, dan siapkan katalog merch."
     >
       <AppAlert status={flash.status} message={flash.message} />
-      <section className="app-surface mb-6 p-5">
+      <section className="app-surface mb-6 p-3.5 sm:p-5">
         <SectionHeader
           eyebrow="Setup PO"
           title="Tambah PO batch"
@@ -49,7 +49,7 @@ export default async function AdminBatchesPage({
             <input
               required
               name="name"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="PO Album Comeback Juni"
             />
           </label>
@@ -57,7 +57,7 @@ export default async function AdminBatchesPage({
             Negara
             <input
               name="sourceCountry"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="Korea"
             />
           </label>
@@ -86,7 +86,7 @@ export default async function AdminBatchesPage({
             Deskripsi
             <input
               name="description"
-              className="h-10 rounded-md border bg-background px-3 text-sm"
+              className="app-field"
               placeholder="Catatan admin atau info PO"
             />
           </label>
@@ -146,14 +146,11 @@ export default async function AdminBatchesPage({
                     <td className="px-4 py-3">{batch._count.products}</td>
                     <td className="px-4 py-3">{batch._count.orders}</td>
                     <td className="px-4 py-3">
-                      <form
-                        action={updateBatchStatusAction}
-                        className="grid min-w-48 gap-1"
-                      >
+                      <form action={updateBatchStatusAction} className="grid gap-1">
                         <input type="hidden" name="id" value={batch.id} />
-                        <div className="flex gap-2">
+                        <div className="grid gap-2 sm:flex">
                           <Select name="status" defaultValue={batch.status}>
-                            <SelectTrigger className="min-h-9 min-w-36 text-xs">
+                            <SelectTrigger className="min-h-9 text-xs sm:min-w-36">
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>

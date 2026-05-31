@@ -131,24 +131,26 @@
       radial-gradient(circle at 18% 100%, color-mix(in oklch, var(--chart-3), transparent 85%), transparent 24rem),
       linear-gradient(180deg, color-mix(in oklch, var(--background), var(--card) 34%), var(--background));
     min-height: 100svh;
+    overflow-x: hidden;
     }
   html {
     @apply font-sans;
+    overflow-x: hidden;
     }
 }
 
 @layer components {
   .app-surface {
-    @apply rounded-2xl border border-border/75 bg-card/88 shadow-sm backdrop-blur-xl;
+    @apply min-w-0 rounded-2xl border border-border/75 bg-card/88 shadow-sm backdrop-blur-xl;
     box-shadow: 0 18px 50px color-mix(in oklch, var(--primary), transparent 90%);
   }
 
   .app-surface-soft {
-    @apply rounded-2xl border border-border/65 bg-muted/55 shadow-sm backdrop-blur-xl;
+    @apply min-w-0 rounded-2xl border border-border/65 bg-muted/55 shadow-sm backdrop-blur-xl;
   }
 
   .app-table {
-    @apply overflow-hidden rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
+    @apply min-w-0 overflow-hidden rounded-2xl border border-border/80 bg-card/90 shadow-sm backdrop-blur;
     box-shadow: 0 16px 42px color-mix(in oklch, var(--primary), transparent 92%);
   }
 
@@ -161,11 +163,11 @@
   }
 
   .app-table thead th {
-    @apply whitespace-nowrap border-b border-border/80 px-5 py-4 text-xs font-bold uppercase text-muted-foreground;
+    @apply whitespace-nowrap border-b border-border/80 px-3.5 py-3 text-xs font-bold uppercase text-muted-foreground sm:px-5 sm:py-4;
   }
 
   .app-table tbody td {
-    @apply border-b border-border/55 px-5 py-4 align-top leading-6;
+    @apply border-b border-border/55 px-3.5 py-3 align-top leading-6 sm:px-5 sm:py-4;
   }
 
   .app-table tbody tr {
@@ -182,12 +184,12 @@
 
   .app-table tbody td:first-child,
   .app-table thead th:first-child {
-    @apply pl-6;
+    @apply pl-4 sm:pl-6;
   }
 
   .app-table tbody td:last-child,
   .app-table thead th:last-child {
-    @apply pr-6;
+    @apply pr-4 sm:pr-6;
   }
 
   .app-header {
@@ -195,7 +197,7 @@
   }
 
   .app-field {
-    @apply min-h-11 rounded-xl border border-input bg-background/72 px-3.5 text-sm text-foreground shadow-sm outline-none transition-all duration-200 placeholder:text-muted-foreground hover:border-primary/35 focus-visible:border-primary/55 focus-visible:bg-card focus-visible:ring-3 focus-visible:ring-ring/25;
+    @apply min-h-11 w-full min-w-0 rounded-xl border border-input bg-background/72 px-3.5 text-sm text-foreground shadow-sm outline-none transition-all duration-200 placeholder:text-muted-foreground hover:border-primary/35 focus-visible:border-primary/55 focus-visible:bg-card focus-visible:ring-3 focus-visible:ring-ring/25;
   }
 
   .app-link-brand {
@@ -248,7 +250,7 @@
   }
 
   .app-form-section {
-    @apply rounded-2xl border border-border/70 bg-card/72 p-4 shadow-sm;
+    @apply min-w-0 rounded-2xl border border-border/70 bg-card/72 p-3.5 shadow-sm sm:p-4;
   }
 
 }
